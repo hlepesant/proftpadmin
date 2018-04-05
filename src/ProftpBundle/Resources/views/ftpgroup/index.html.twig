@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{% trans %}Ftpgroups list{% endtrans %}</h1>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Groupname</th>
+                <th scope="col">Gid</th>
+                <th scope="col">Members</th>
+                <th scope="col" colspan="3">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ftpgroup in ftpgroups %}
+            <tr>
+                <td><a href="{{ path('ftpgroup_show', { 'id': ftpgroup.id }) }}">{{ ftpgroup.id }}</a></td>
+                <td>{{ ftpgroup.groupname }}</td>
+                <td>{{ ftpgroup.gid }}</td>
+                <td> <a href="{{ path('ftpuser_index', { 'id_group': ftpgroup.id }) }}">users</a> </td>
+                <td> <a href="{{ path('ftpgroup_edit', { 'id': ftpgroup.id }) }}">edit</a> </td>
+                <td>
+                {% if is_granted('ROLE_ADMIN') %}
+                {{ render(controller( 'ProftpBundle:Ftpgroup:delete_form', { 'id': ftpgroup.id } )) }}
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('ftpgroup_new') }}">Create a new ftpgroup</a>
+        </li>
+    </ul>
+{% endblock %}

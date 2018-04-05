@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{% trans %}Ftpusers list{% endtrans %}</h1>
+
+
+    {{ ftpgroup.id }}
+
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Uid</th>
+                <th scope="col" colspan="3">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ftpuser in ftpusers %}
+            <tr>
+                <td>{{ ftpuser.username }}</td>
+                <td>{{ ftpuser.uid }}</td>
+                <td> <a href="{{ path('ftpuser_show', { 'id_group': ftpgroup.id, 'id': ftpuser.id }) }}">show</a> </td>
+                <td> <a href="{{ path('ftpuser_edit', { 'id_group': ftpgroup.id, 'id': ftpuser.id }) }}">edit</a> </td>
+                <td>
+                {% if is_granted('ROLE_ADMIN') %}
+                {{ render(controller( 'ProftpBundle:Ftpuser:delete_form', { 'id_group': ftpgroup.id, 'id': ftpuser.id } )) }}
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('ftpuser_new', { 'id_group': ftpgroup.id }) }}">Create a new ftpuser</a>
+        </li>
+    </ul>
+{% endblock %}
