@@ -26,6 +26,8 @@ framework:
         # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id: session.handler.native_file
         save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+    templating:
+        engines: ['twig']
     fragments: ~
     http_method_override: true
     assets: ~
@@ -86,3 +88,9 @@ sensio_framework_extra:
     cache:       { annotations: true }
     security:    { annotations: true }
     psr_message: { enabled: false } # Defaults to true if the PSR-7 bridge is installed
+
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~

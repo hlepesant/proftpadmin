@@ -6,10 +6,11 @@
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">Groupname</th>
-                <th scope="col">Members</th>
-                <th scope="col" colspan="2">Actions</th>
-                <th scope="col" class="text-right"><a href="{{ path('ftpgroup_new') }}" class="text-white">Create</a></th>
+                <th scope="col" class="col-sm-5">Groupname</th>
+                <th scope="col" class="col-sm-5">Members</th>
+                {% image '@ProftpBundle/Resources/public/famfam/add.png' %}
+                <th scope="col" class="col-sm-1 text-right" colspan="3"><a href="{{ path('ftpgroup_new') }}" class="text-white"><img src="{{ asset_url }}" alt="Create" /></a></th>
+                {% endimage %}
             </tr>
         </thead>
         <tbody>
@@ -17,15 +18,19 @@
             <tr>
                 <td>{{ ftpgroup.groupname }}</td>
                 <td>{{ ftpgroup.members|length }}</td>
-                <td> <a href="{{ path('ftpuser_index', { 'id_group': ftpgroup.id }) }}">users</a> </td>
-                <td> <a href="{{ path('ftpgroup_edit', { 'id': ftpgroup.id }) }}">edit</a> </td>
+                {% image '@ProftpBundle/Resources/public/famfam/group.png' %}
+                <td><a href="{{ path('ftpuser_index', { 'id_group': ftpgroup.id }) }}"><img src="{{ asset_url }}" alt="Users" /></a></td>
+                {% endimage %}
+                {% image '@ProftpBundle/Resources/public/famfam/pencil.png' %}
+                <td><a href="{{ path('ftpgroup_edit', { 'id': ftpgroup.id }) }}"><img src="{{ asset_url }}" alt="Edit" /></a></td>
+                {% endimage %}
                 <td>
-                {% if is_granted('ROLE_ADMIN') %}
-                    {% if ftpgroup.members|length == 0 %}
-                {{ render(controller( 'ProftpBundle:Ftpgroup:delete_form', { 'id': ftpgroup.id } )) }}
-                    {% else %} 
-                <a href="#" data-toggle="tooltip" title="" data-original-title="{% trans %}Remove all members{% endtrans %}">----</a>
-                    {% endif %}
+                {% if is_granted('ROLE_ADMIN') and ftpgroup.members|length == 0 %}
+                    {{ render(controller( 'ProftpBundle:Ftpgroup:delete_form', { 'id': ftpgroup.id } )) }}
+                {% else %} 
+                    {% image '@ProftpBundle/Resources/public/famfam/lock.png' %}
+                <img src="{{ asset_url }}" data-toggle="tooltip" title="" data-original-title="{% trans %}Remove all members{% endtrans %}" />
+                    {% endimage %}
                 {% endif %}
                 </td>
             </tr>

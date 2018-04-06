@@ -42,7 +42,8 @@ class FtpuserController extends Controller
             );
         }
 
-        $ftpusers = $em->getRepository('ProftpBundle:Ftpuser')->findAll();
+        #$ftpusers = $em->getRepository('ProftpBundle:Ftpuser')->findAll();
+        $ftpusers = $ftpgroup->getMembers();
 
         return $this->render('@Proftp/ftpuser/index.html.twig', array(
             'ftpgroup' => $ftpgroup,
