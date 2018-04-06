@@ -46,7 +46,13 @@ class FtpgroupController extends Controller
      */
     public function newAction(Request $request)
     {
+        $gid = $this->getDoctrine()
+            ->getRepository(Ftpgroup::class)
+            ->getNextGroupId();
+
         $ftpgroup = new Ftpgroup();
+        $ftpgroup->setGid($gid);
+
         $form = $this->createForm('ProftpBundle\Form\FtpgroupType', $ftpgroup);
         $form->handleRequest($request);
 
@@ -55,7 +61,8 @@ class FtpgroupController extends Controller
             $em->persist($ftpgroup);
             $em->flush();
 
-            return $this->redirectToRoute('ftpgroup_show', array('id' => $ftpgroup->getId()));
+            #return $this->redirectToRoute('ftpgroup_show', array('id' => $ftpgroup->getId()));
+            return $this->redirectToRoute('ftpgroup_index');
         }
 
         return $this->render('@Proftp/ftpgroup/new.html.twig', array(
@@ -88,20 +95,19 @@ class FtpgroupController extends Controller
      */
     public function editAction(Request $request, Ftpgroup $ftpgroup)
     {
-        $deleteForm = $this->createDeleteForm($ftpgroup);
         $editForm = $this->createForm('ProftpBundle\Form\FtpgroupType', $ftpgroup);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('ftpgroup_edit', array('id' => $ftpgroup->getId()));
+            #return $this->redirectToRoute('ftpgroup_edit', array('id' => $ftpgroup->getId()));
+            return $this->redirectToRoute('ftpgroup_index');
         }
 
         return $this->render('@Proftp/ftpgroup/edit.html.twig', array(
             'ftpgroup' => $ftpgroup,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form' => $editForm->createView()
         ));
     }
 

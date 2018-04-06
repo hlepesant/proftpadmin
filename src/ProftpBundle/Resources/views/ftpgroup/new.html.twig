@@ -5,12 +5,19 @@
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('ftpgroup_index') }}">Back to the list</a>
-        </li>
-    </ul>
+<div class="panel-footer row">
+    <div class="col-xs-5 text-left">
+        <div class="previous">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+    <div class="col-xs-2 text-center">&nbsp;&nbsp;</div>
+    <div class="col-xs-5 text-right">   
+        <div class="next">
+            <a href="{{ path('ftpgroup_index') }}"><button type="button" class="btn btn-secondary">Cancel</button></a>
+        </div>
+    </div>
+</div>
+    {{ form_end(form) }}
 {% endblock %}
