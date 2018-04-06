@@ -5,11 +5,15 @@ namespace ProftpBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+
 /**
  * Ftpgroup
  *
  * @ORM\Table(name="ftpgroup")
  * @ORM\Entity(repositoryClass="ProftpBundle\Repository\FtpgroupRepository")
+ * @UniqueEntity("groupname")
  */
 class Ftpgroup
 {
@@ -66,7 +70,7 @@ class Ftpgroup
      */
     public function setGroupname($groupname)
     {
-        $this->groupname = $groupname;
+        $this->groupname = mb_strtolower($groupname, 'UTF-8');
 
         return $this;
     }
@@ -139,6 +143,11 @@ class Ftpgroup
         return $this->members;
     }
 
+
+    /**
+     * __toString
+     *
+     */
     public function __toString()
     {
         return $this->groupname;

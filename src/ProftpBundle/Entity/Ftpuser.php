@@ -4,11 +4,13 @@ namespace ProftpBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Ftpuser
  *
  * @ORM\Table(name="ftpuser")
  * @ORM\Entity(repositoryClass="ProftpBundle\Repository\FtpuserRepository")
+ * @UniqueEntity("username")
  */
 class Ftpuser
 {
