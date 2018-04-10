@@ -1,6 +1,7 @@
 jQuery(document).ready(function () {
 
     "use strict";
+    var home = $('#proftpbundle_ftpuser_home').val();
 
     $('#proftpbundle_ftpuser_identity').on('change blur click', function(){
 
@@ -15,7 +16,9 @@ jQuery(document).ready(function () {
             }
 
             var username = FirstName[0].toLowerCase() + LastName.toLowerCase(); 
-            $('#proftpbundle_ftpuser_username').val(username.toLowerCase());
+            $('#proftpbundle_ftpuser_username').val(username);
+
+            $('#proftpbundle_ftpuser_home').val( home + '/' + username);
         }
     });
 
@@ -35,4 +38,5 @@ jQuery(document).ready(function () {
 //        }
 //    };
     $(':password').pwstrength(pwd_options);
+
 });

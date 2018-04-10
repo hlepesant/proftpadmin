@@ -74,7 +74,7 @@ class FtpuserController extends Controller
 
         $ftpuser = new Ftpuser();
         $ftpuser->setShell('/bin/sh');
-        $ftpuser->setHome(sprintf('/opt/FtpSites/%s/', $ftpgroup->getGroupname()));
+        $ftpuser->setHome(sprintf('/opt/FtpSites/%s', $ftpgroup->getGroupname()));
         $ftpuser->setUid($uid);
         $ftpuser->setGroup($ftpgroup);
 
@@ -148,7 +148,8 @@ class FtpuserController extends Controller
     /**
      * Deletes a ftpuser entity.
      *
-     * @Route("/{id}", name="ftpuser_delete")
+     * @Route("/{id_group}/{id}", name="ftpuser_delete")
+     * @ParamConverter("ftpgroup", class="ProftpBundle:Ftpgroup",  options={"id" = "id_group"})
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Ftpgroup $ftpgroup, Ftpuser $ftpuser)
@@ -176,8 +177,7 @@ class FtpuserController extends Controller
     private function createDeleteForm(Ftpgroup $ftpgroup, Ftpuser $ftpuser)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('ftpuser_delete', array('id' => $ftpuser->getId())))
-            ->add('id_group', HiddenType::class, array('data' => $ftpgroup->getId()))
+            ->setAction($this->generateUrl('ftpuser_delete', array('id_group' => $ftpgroup->getId(), 'id' => $ftpuser->getId())))
             ->setMethod('DELETE')
             ->getForm()
         ;
@@ -190,17 +190,15 @@ class FtpuserController extends Controller
      * @ParamConverter("ftpgroup", class="ProftpBundle:Ftpgroup",  options={"id" = "id_group"})
      * @Method("POST")
      */
-    public function delete_formAction(Ftpgroup $ftpgroup, int $id)
+    public function delete_formAction(Ftpgroup $ftpgroup, Ftpuser $ftpuser)
     {
         $deleteForm = $this->createFormBuilder()
-            ->setAction($this->generateUrl('ftpuser_delete', array('id' => $id)))
-            ->add('id_group', HiddenType::class, array('data' => $ftpgroup->getId()))
+            ->setAction($this->generateUrl('ftpuser_delete', array('id_group' => $ftpgroup->getId(), 'id' => $ftpuser->getId())))
             ->setMethod('DELETE')
             ->getForm()
         ;
 
         return $this->render('@Proftp/ftpuser/delete_form.html.twig', array(
-            'id' => $id,
             'delete_form' => $deleteForm->createView(),
         ));
     }
