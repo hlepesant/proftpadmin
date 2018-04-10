@@ -1,16 +1,48 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    {% javascripts '@ProftpBundle/Resources/public/js/ftpuser/*' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
 {% block body %}
     <h1>Ftpuser creation</h1>
 
     {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('ftpuser_index', { id_group: ftpgroup.id}) }}">Back to the list</a>
-        </li>
-    </ul>
+{{ form_row(form.identity) }}
+{{ form_row(form.username) }}
+
+<div class="form-group" id="pwd-container">
+    <div>
+{{ form_label(form.password) }}
+{{ form_errors(form.password) }}
+{{ form_widget(form.password) }}
+    </div>
+    <div style="padding-top: 0px;">
+        <div class="pwstrength_viewport_progress"></div>
+    </div>
+</div>
+
+{{ form_row(form.uid) }}
+{{ form_row(form.home) }}
+{{ form_row(form.shell) }}
+{{ form_row(form.group) }}
+
+<div class="panel-footer row">
+    <div class="col-xs-5 text-left">
+        <div class="previous">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+    <div class="col-xs-2 text-center">&nbsp;&nbsp;</div>
+    <div class="col-xs-5 text-right">   
+        <div class="next">
+            <a href="{{ path('ftpuser_index', { id_group: ftpgroup.id}) }}"><button type="button" class="btn btn-secondary">Cancel</button></a>
+        </div>
+    </div>
+</div>
+
+    {{ form_end(form) }}
 {% endblock %}
