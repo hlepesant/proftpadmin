@@ -10,4 +10,10 @@ namespace ProftpBundle\Repository;
  */
 class FtpuserRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getNextUserId() {
+        return $this->createQueryBuilder('u')
+            ->select('MAX(u.uid) + 1')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

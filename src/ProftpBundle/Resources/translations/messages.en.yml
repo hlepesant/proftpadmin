@@ -3,3 +3,10 @@ Remove all members: Remove all members to delete this group
 Groupname: Groupname
 Gid: Group Id
 Ftpusers list: List of FTP users
+Identity: Identity
+Username: Username
+Password: Password
+Uid: Uid
+Home: Home
+Shell: Shell
+Group: Group

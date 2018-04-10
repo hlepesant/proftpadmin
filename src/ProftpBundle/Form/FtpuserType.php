@@ -13,7 +13,7 @@ class FtpuserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('username')->add('password')->add('uid')->add('home')->add('shell')->add('group');
+        $builder->add('identity')->add('username')->add('password')->add('uid')->add('home')->add('shell')->add('group');
     }/**
      * {@inheritdoc}
      */

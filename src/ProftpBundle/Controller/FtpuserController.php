@@ -68,7 +68,18 @@ class FtpuserController extends Controller
             );
         }
 
+        $uid = $this->getDoctrine()
+            ->getRepository(Ftpuser::class)
+            ->getNextUserId();
+
         $ftpuser = new Ftpuser();
+        $ftpuser->setShell('/bin/sh');
+        $ftpuser->setHome(sprintf('/opt/FtpSites/%s/', $ftpgroup->getGroupname()));
+        $ftpuser->setUid($uid);
+        $ftpuser->setGroup($ftpgroup);
+
+
+
         $form = $this->createForm('ProftpBundle\Form\FtpuserType', $ftpuser, array(
             'action' => $this->generateUrl('ftpuser_new', array('id_group' => $ftpgroup->getId())),
             'method' => 'POST'
@@ -114,9 +125,9 @@ class FtpuserController extends Controller
      * @ParamConverter("ftpgroup", class="ProftpBundle:Ftpgroup",  options={"id" = "id_group"})
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Ftpuser $ftpuser)
+    public function editAction(Request $request, Ftpgroup $ftpgroup, Ftpuser $ftpuser)
     {
-        $deleteForm = $this->createDeleteForm($ftpuser);
+        $deleteForm = $this->createDeleteForm($ftpgroup, $ftpuser);
         $editForm = $this->createForm('ProftpBundle\Form\FtpuserType', $ftpuser);
         $editForm->handleRequest($request);
 
@@ -126,8 +137,9 @@ class FtpuserController extends Controller
             return $this->redirectToRoute('ftpuser_edit', array('id' => $ftpuser->getId()));
         }
 
-        return $this->render('ftpuser/edit.html.twig', array(
+        return $this->render('@Proftp/ftpuser/edit.html.twig', array(
             'ftpuser' => $ftpuser,
+            'ftpgroup' => $ftpgroup,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));

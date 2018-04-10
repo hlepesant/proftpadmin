@@ -26,7 +26,14 @@ class Ftpuser
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=255)
+     * @ORM\Column(name="identity", type="string", length=255)
+     */
+    private $identity;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=255, nullable=true)
      */
     private $username;
 
@@ -218,5 +225,29 @@ class Ftpuser
     public function getGroup()
     {
         return $this->group;
+    }
+
+    /**
+     * Set identity
+     *
+     * @param string $identity
+     *
+     * @return Ftpuser
+     */
+    public function setIdentity($identity)
+    {
+        $this->identity = $identity;
+
+        return $this;
+    }
+
+    /**
+     * Get identity
+     *
+     * @return string
+     */
+    public function getIdentity()
+    {
+        return $this->identity;
     }
 }
