@@ -26,14 +26,21 @@ class Ftpuser
     /**
      * @var string
      *
-     * @ORM\Column(name="identity", type="string", length=255)
+     * @ORM\Column(name="firstname", type="string", length=255)
      */
-    private $identity;
+    private $firstname;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=255, nullable=true)
+     * @ORM\Column(name="lastname", type="string", length=255)
+     */
+    private $lastname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=255)
      */
     private $username;
 
@@ -116,7 +123,8 @@ class Ftpuser
      */
     public function setPassword($password)
     {
-        $this->password = $password;
+        //$this->password = $password;
+        $this->password = "{md5}".base64_encode(pack("H*", md5($password)));
 
         return $this;
     }
@@ -228,26 +236,50 @@ class Ftpuser
     }
 
     /**
-     * Set identity
+     * Set firstname
      *
-     * @param string $identity
+     * @param string $firstname
      *
      * @return Ftpuser
      */
-    public function setIdentity($identity)
+    public function setFirstname($firstname)
     {
-        $this->identity = $identity;
+        $this->firstname = $firstname;
 
         return $this;
     }
 
     /**
-     * Get identity
+     * Get firstname
      *
      * @return string
      */
-    public function getIdentity()
+    public function getFirstname()
     {
-        return $this->identity;
+        return $this->firstname;
+    }
+
+    /**
+     * Set lastname
+     *
+     * @param string $lastname
+     *
+     * @return Ftpuser
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * Get lastname
+     *
+     * @return string
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
     }
 }

@@ -11,9 +11,12 @@ namespace ProftpBundle\Repository;
 class FtpgroupRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getNextGroupId() {
-        return $this->createQueryBuilder('g')
+        $nextid = $this->createQueryBuilder('g')
             ->select('MAX(g.gid) + 1')
             ->getQuery()
             ->getSingleScalarResult();
+
+        if ( is_null($nextid)) $nextid = 10001; 
+        return $nextid;
     }
 }

@@ -11,9 +11,12 @@ namespace ProftpBundle\Repository;
 class FtpuserRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getNextUserId() {
-        return $this->createQueryBuilder('u')
+        $nextid = $this->createQueryBuilder('u')
             ->select('MAX(u.uid) + 1')
             ->getQuery()
             ->getSingleScalarResult();
+       
+        if ( is_null($nextid)) $nextid = 10001; 
+        return $nextid;
     }
 }

@@ -78,12 +78,11 @@ class FtpuserController extends Controller
         $ftpuser->setUid($uid);
         $ftpuser->setGroup($ftpgroup);
 
-
-
         $form = $this->createForm('ProftpBundle\Form\FtpuserType', $ftpuser, array(
             'action' => $this->generateUrl('ftpuser_new', array('id_group' => $ftpgroup->getId())),
             'method' => 'POST'
         ));
+        //$form->get('group')->setData($ftpgroup);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
