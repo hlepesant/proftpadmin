@@ -118,7 +118,7 @@ class DeprecationErrorHandler
             }
 
             if (isset($trace[$i]['object']) || isset($trace[$i]['class'])) {
-                if (isset($trace[$i]['class']) && in_array($trace[$i]['class'], array('Symfony\Bridge\PhpUnit\SymfonyTestsListener', 'Symfony\Bridge\PhpUnit\Legacy\SymfonyTestsListener'), true)) {
+                if (isset($trace[$i]['class']) && 0 === strpos($trace[$i]['class'], 'Symfony\Bridge\PhpUnit\Legacy\SymfonyTestsListenerFor')) {
                     $parsedMsg = unserialize($msg);
                     $msg = $parsedMsg['deprecation'];
                     $class = $parsedMsg['class'];
@@ -216,7 +216,7 @@ class DeprecationErrorHandler
 
                 $groups = array('unsilenced', 'remaining');
                 if (DeprecationErrorHandler::MODE_WEAK_VENDORS === $mode) {
-                        $groups[] = 'remaining vendor';
+                    $groups[] = 'remaining vendor';
                 }
                 array_push($groups, 'legacy', 'other');
 
@@ -297,17 +297,38 @@ class DeprecationErrorHandler
         });
     }
 
+    /**
+     * Returns true if STDOUT is defined and supports colorization.
+     *
+     * Reference: Composer\XdebugHandler\Process::supportsColor
+     * https://github.com/composer/xdebug-handler
+     *
+     * @return bool
+     */
     private static function hasColorSupport()
     {
-        if ('\\' === DIRECTORY_SEPARATOR) {
-            return
-                defined('STDOUT') && function_exists('sapi_windows_vt100_support') && sapi_windows_vt100_support(STDOUT)
-                || '10.0.10586' === PHP_WINDOWS_VERSION_MAJOR.'.'.PHP_WINDOWS_VERSION_MINOR.'.'.PHP_WINDOWS_VERSION_BUILD
+        if (!defined('STDOUT')) {
+            return false;
+        }
+
+        if (DIRECTORY_SEPARATOR === '\\') {
+            return (function_exists('sapi_windows_vt100_support')
+                && sapi_windows_vt100_support(STDOUT))
                 || false !== getenv('ANSICON')
                 || 'ON' === getenv('ConEmuANSI')
                 || 'xterm' === getenv('TERM');
         }
 
-        return defined('STDOUT') && function_exists('posix_isatty') && @posix_isatty(STDOUT);
+        if (function_exists('stream_isatty')) {
+            return stream_isatty(STDOUT);
+        }
+
+        if (function_exists('posix_isatty')) {
+            return posix_isatty(STDOUT);
+        }
+
+        $stat = fstat(STDOUT);
+        // Check if formatted mode is S_IFCHR
+        return $stat ? 0020000 === ($stat['mode'] & 0170000) : false;
     }
 }

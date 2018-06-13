@@ -1,41 +1,28 @@
 <?php
 
-/*
- * This file is part of the Doctrine Bundle
- *
- * The code was originally distributed inside the Symfony framework.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- * (c) Doctrine Project, Benjamin Eberlei <kontakt@beberlei.de>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Doctrine\Bundle\DoctrineBundle;
 
+use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\ORMException;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Bridge\Doctrine\ManagerRegistry;
-use Doctrine\ORM\ORMException;
-use Doctrine\ORM\EntityManager;
 
 /**
  * References all Doctrine connections and entity managers in a given Container.
- *
- * @author Fabien Potencier <fabien@symfony.com>
  */
 class Registry extends ManagerRegistry implements RegistryInterface
 {
     /**
      * Construct.
      *
-     * @param ContainerInterface $container
-     * @param array              $connections
-     * @param array              $entityManagers
-     * @param string             $defaultConnection
-     * @param string             $defaultEntityManager
+     * @param Connection[]             $connections
+     * @param EntityManagerInterface[] $entityManagers
+     * @param string                   $defaultConnection
+     * @param string                   $defaultEntityManager
      */
     public function __construct(ContainerInterface $container, array $connections, array $entityManagers, $defaultConnection, $defaultEntityManager)
     {
@@ -110,7 +97,6 @@ class Registry extends ManagerRegistry implements RegistryInterface
      *
      * @param string $name The entity manager name (null for the default one)
      *
-     * @return EntityManager
      *
      * @deprecated
      */
@@ -165,7 +151,7 @@ class Registry extends ManagerRegistry implements RegistryInterface
     /**
      * Gets all connection names.
      *
-     * @return array An array of connection names
+     * @return string[] An array of connection names
      *
      * @deprecated
      */

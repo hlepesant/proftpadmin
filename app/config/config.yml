@@ -70,7 +70,7 @@ swiftmailer:
     password: '%mailer_password%'
     spool: { type: memory }
 
-# FosUserBundle : https://symfony.com/doc/current/bundles/FOSUserBundle/index.html
+    # FosUserBundle : https://symfony.com/doc/current/bundles/FOSUserBundle/index.html
 fos_user:
     db_driver: orm
     firewall_name: main

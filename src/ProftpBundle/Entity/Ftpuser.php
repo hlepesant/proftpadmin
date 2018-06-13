@@ -65,6 +65,11 @@ class Ftpuser
      */
     private $group;
 
+    /**
+     * @var int
+     *
+     */
+	private $minimum_uid = 10001;
 
     /**
      * Get id
@@ -133,6 +138,7 @@ class Ftpuser
      */
     public function setUid($uid)
     {
+		if ( $uid == "" ) $uid = $this->minimum_uid;
         $this->uid = $uid;
 
         return $this;

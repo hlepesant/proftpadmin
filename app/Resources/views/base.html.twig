@@ -47,13 +47,13 @@
         <div class="container">
         {% block body %}{% endblock %}
         </div>
-        {% block javascripts %}
-        {% endblock %}
         {% block foot_js %}
         <script src="{{ asset('media/jquery/jquery-3.2.1.slim.min.js') }}"></script>
         <script src="{{ asset('media/popper/popper.min.js') }}"></script>
         <script src="{{ asset('media/bootstrap/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('media/proftpadmin.js') }}"></script>
+        {% endblock %}
+        {% block javascripts %}
         {% endblock %}
     </body>
 </html>

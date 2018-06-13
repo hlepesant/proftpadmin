@@ -12,16 +12,14 @@
 /**
  * Twig_NodeVisitor_Sandbox implements sandboxing.
  *
- * @final
- *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Twig_NodeVisitor_Sandbox extends Twig_BaseNodeVisitor
+final class Twig_NodeVisitor_Sandbox extends Twig_BaseNodeVisitor
 {
-    protected $inAModule = false;
-    protected $tags;
-    protected $filters;
-    protected $functions;
+    private $inAModule = false;
+    private $tags;
+    private $filters;
+    private $functions;
 
     protected function doEnterNode(Twig_Node $node, Twig_Environment $env)
     {
@@ -46,6 +44,11 @@ class Twig_NodeVisitor_Sandbox extends Twig_BaseNodeVisitor
             // look for functions
             if ($node instanceof Twig_Node_Expression_Function && !isset($this->functions[$node->getAttribute('name')])) {
                 $this->functions[$node->getAttribute('name')] = $node;
+            }
+
+            // the .. operator is equivalent to the range() function
+            if ($node instanceof Twig_Node_Expression_Binary_Range && !isset($this->functions['range'])) {
+                $this->functions['range'] = $node;
             }
 
             // wrap print to check __toString() calls

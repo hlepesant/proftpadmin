@@ -45,6 +45,12 @@ class Ftpgroup
      */
     private $members;
 
+    /**
+     * @var int
+     *
+     */
+	private $minimum_gid = 10001;
+
     public function __construct()
     {
         $this->members = new ArrayCollection();
@@ -94,6 +100,7 @@ class Ftpgroup
      */
     public function setGid($gid)
     {
+		if ( $gid == "" ) $gid = $this->minimum_gid;
         $this->gid = $gid;
 
         return $this;
