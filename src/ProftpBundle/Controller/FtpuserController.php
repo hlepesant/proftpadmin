@@ -163,7 +163,6 @@ class FtpuserController extends Controller
         }
 
         return $this->redirectToRoute('ftpuser_index', array('id_group' => $ftpgroup->getId()));
-            
     }
 
     /**
