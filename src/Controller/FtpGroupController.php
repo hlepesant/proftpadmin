@@ -29,7 +29,7 @@ class FtpGroupController extends Controller
     public function new(Request $request): Response
     {
         $gid = $this->getDoctrine()
-            ->getRepository(Ftpgroup::class)
+            ->getRepository(FtpGroup::class)
             ->getNextGroupId();
 
         $ftpGroup = new FtpGroup();

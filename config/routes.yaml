@@ -1,3 +1,10 @@
 index:
     path: /
     controller: App\Controller\DefaultController::index
+
+ftp:
+    path: /ftp
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+    defaults:
+        path: /ftp/group
+        permanent: true

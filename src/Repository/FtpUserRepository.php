@@ -14,6 +14,8 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class FtpUserRepository extends ServiceEntityRepository
 {
+	private $minimum_uid = 10001;
+
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, FtpUser::class);
@@ -22,6 +24,18 @@ class FtpUserRepository extends ServiceEntityRepository
 //    /**
 //     * @return FtpUser[] Returns an array of FtpUser objects
 //     */
+
+    public function findByGroupId($id_group)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.ftpgroup = :val')
+            ->setParameter('val', $id_group)
+            ->orderBy('u.username', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     /*
     public function findByExampleField($value)
     {
@@ -47,4 +61,14 @@ class FtpUserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getNextUserId() {
+        $nextid = $this->createQueryBuilder('u')
+            ->select('MAX(u.uid) + 1')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        if ( is_null($nextid)) $nextid = $this->minimum_uid;
+        return $nextid;
+    }
 }

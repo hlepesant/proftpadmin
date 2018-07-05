@@ -21,7 +21,7 @@ class FtpuserType extends AbstractType
         $builder->add('firstname')
             ->add('lastname')
             ->add('username')
-            ->add('password', PasswordType::class)
+            #->add('password', PasswordType::class)
             ->add('uid', TextType::class, array(
                 'disabled' => 'true'
             ))

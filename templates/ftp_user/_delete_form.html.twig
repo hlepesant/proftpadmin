@@ -1,5 +1,5 @@
-<form method="post" action="{{ path('ftp_user_delete', {'id': ftp_user.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form method="post" action="{{ path('ftp_user_delete', {'id_group': ftp_group.id, 'id': ftp_user.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ftp_user.id) }}">
-    <button class="btn">Delete</button>
+	<input type="image" src="{{ asset('/media/famfam/bin_closed.png') }}" alt="Submit button" name="type" value="submit" />
 </form>

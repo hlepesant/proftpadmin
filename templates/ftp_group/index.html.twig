@@ -3,13 +3,13 @@
 {% block title %}FtpGroup index{% endblock %}
 
 {% block body %}
-    <h1>FtpGroup index</h1>
+    <h1>List of groups</h1>
 
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
-                <th scope="col" class="col-sm-5">Groupname</th>
-                <th scope="col" class="col-sm-5">Members</th>
+                <th scope="col" class="col-sm-5">Name</th>
+                <th scope="col" class="col-sm-5"># Members</th>
                 <th scope="col" class="col-sm-1 text-right" colspan="3"><a href="{{ path('ftp_group_new') }}" class="text-white"><img src="{{ asset('/media/famfam/add.png') }}" alt="Create" /></a></th>
             </tr>
         </thead>
