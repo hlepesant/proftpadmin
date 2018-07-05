@@ -1,0 +1,18 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+
+<div class="panel-footer row">
+    <div class="col-xs-5 text-left">
+        <div class="previous">
+			<button class="btn">{{ button_label|default('Save') }}</button>
+        </div>
+    </div>
+    <div class="col-xs-2 text-center">&nbsp;&nbsp;</div>
+    <div class="col-xs-5 text-right">   
+        <div class="next">
+            <a href="{{ path('ftp_group_index') }}"><button type="button" class="btn btn-secondary">Cancel</button></a>
+        </div>
+    </div>
+</div>
+
+{{ form_end(form) }}

@@ -1,0 +1,155 @@
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+
+/**
+ * Ftpgroup
+ *
+ * @ORM\Table(name="ftpgroup")
+ * @ORM\Entity(repositoryClass="App\Repository\FtpgroupRepository")
+ * @UniqueEntity("groupname")
+ */
+class Ftpgroup
+{
+    /**
+     * @var int
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="integer")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="groupname", type="string", length=255, unique=true)
+     */
+    private $groupname;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="gid", type="integer", unique=true)
+     */
+    private $gid;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Ftpuser", mappedBy="group")
+     */
+    private $members;
+
+    public function __construct()
+    {
+        $this->members = new ArrayCollection();
+    }
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set groupname
+     *
+     * @param string $groupname
+     *
+     * @return Ftpgroup
+     */
+    public function setGroupname($groupname): self
+    {
+        $this->groupname = mb_strtolower($groupname, 'UTF-8');
+
+        return $this;
+    }
+
+    /**
+     * Get groupname
+     *
+     * @return string
+     */
+    public function getGroupname(): ?string
+    {
+        return $this->groupname;
+    }
+
+    /**
+     * Set gid
+     *
+     * @param integer $gid
+     *
+     * @return Ftpgroup
+     */
+    public function setGid($gid): self
+    {
+        $this->gid = $gid;
+
+        return $this;
+    }
+
+    /**
+     * Get gid
+     *
+     * @return int
+     */
+    public function getGid(): ?integer
+    {
+        return $this->gid;
+    }
+
+    /**
+     * Add member
+     *
+     * @param \App\Entity\Ftpuser $member
+     *
+     * @return Ftpgroup
+     */
+    public function addMember(\App\Entity\Ftpuser $member)
+    {
+        $this->members[] = $member;
+
+        return $this;
+    }
+
+    /**
+     * Remove member
+     *
+     * @param \App\Entity\Ftpuser $member
+     */
+    public function removeMember(\App\Entity\Ftpuser $member)
+    {
+        $this->members->removeElement($member);
+    }
+
+    /**
+     * Get members
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMembers()
+    {
+        return $this->members;
+    }
+
+
+    /**
+     * __toString
+     *
+     */
+    public function __toString()
+    {
+        return $this->groupname;
+    }
+}

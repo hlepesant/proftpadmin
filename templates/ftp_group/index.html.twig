@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FtpGroup index{% endblock %}
+
+{% block body %}
+    <h1>FtpGroup index</h1>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" class="col-sm-5">Groupname</th>
+                <th scope="col" class="col-sm-5">Members</th>
+                <th scope="col" class="col-sm-1 text-right" colspan="3"><a href="{{ path('ftp_group_new') }}" class="text-white"><img src="{{ asset('/media/famfam/add.png') }}" alt="Create" /></a></th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for ftp_group in ftp_groups %}
+		{#
+            <tr>
+                <td>{{ ftp_group.id }}</td>
+                <td>{{ ftp_group.groupname }}</td>
+                <td>{{ ftp_group.gid }}</td>
+                <td>
+                    <a href="{{ path('ftp_group_show', {'id': ftp_group.id}) }}">show</a>
+                    <a href="{{ path('ftp_group_edit', {'id': ftp_group.id}) }}">edit</a>
+                </td>
+            </tr>
+			#}
+
+            <tr>
+                <td>{{ ftp_group.groupname }}</td>
+                <td>{{ ftp_group.members|length }}</td>
+                <td><a href="{{ path('ftp_user_index', { 'id_group': ftp_group.id }) }}"><img src="{{ asset('/media/famfam/group.png') }}" alt="Users" /></a></td>
+                <td><a href="{{ path('ftp_group_edit', { 'id': ftp_group.id }) }}"><img src="{{ asset('/media/famfam/pencil.png') }}" alt="Edit" /></a></td>
+                <td>
+                {% if is_granted('ROLE_ADMIN') and ftp_group.members|length == 0 %}
+					{{ include('ftp_group/_delete_form.html.twig') }}
+                {% else %} 
+                <img src="{{ asset('/media/famfam/lock.png') }}" data-toggle="tooltip" title="" data-original-title="{% trans %}Remove all members{% endtrans %}" />
+                {% endif %}
+                </td>
+            </tr>
+
+        {% else %}
+            <tr>
+                <td colspan="4">no group found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

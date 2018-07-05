@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit FtpUser{% endblock %}
+
+{% block body %}
+    <h1>Edit FtpUser</h1>
+
+    {{ include('ftp_user/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('ftp_user_index') }}">back to list</a>
+
+    {{ include('ftp_user/_delete_form.html.twig') }}
+{% endblock %}

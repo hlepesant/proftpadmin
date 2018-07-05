@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+<script src="{{ asset('/media/proftpadmin.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <h1>Ftpuser creation</h1>
+
+    {{ form_start(form) }}
+<div class="row">
+    <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+{{  form_label(form.firstname) }}
+{{ form_errors(form.firstname) }}
+{{ form_widget(form.firstname) }}
+    </div>
+    <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+{{  form_label(form.lastname) }}
+{{ form_errors(form.lastname) }}
+{{ form_widget(form.lastname) }}
+    </div>
+</div>
+
+{{ form_row(form.username) }}
+
+<div class="form-group" id="pwd-container">
+    <div>
+{{ form_errors(form.password) }}
+{{ form_widget(form.password) }}
+    </div>
+    <div style="padding-top: 0px;">
+        <div class="pwstrength_viewport_progress"></div>
+    </div>
+</div>
+
+{{ form_row(form.uid) }}
+{{ form_row(form.home) }}
+{{ form_row(form.shell) }}
+{# form_row(form.group) #}
+
+<div class="panel-footer row">
+    <div class="col-xs-5 text-left">
+        <div class="previous">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+    <div class="col-xs-2 text-center">&nbsp;&nbsp;</div>
+    <div class="col-xs-5 text-right">   
+        <div class="next">
+            <a href="{{ path('ftpuser_index', { id_group: ftpgroup.id}) }}"><button type="button" class="btn btn-secondary">Cancel</button></a>
+        </div>
+    </div>
+</div>
+
+    {{ form_end(form) }}
+{% endblock %}

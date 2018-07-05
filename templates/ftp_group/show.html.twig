@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FtpGroup{% endblock %}
+
+{% block body %}
+    <h1>FtpGroup</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ftp_group.id }}</td>
+            </tr>
+            <tr>
+                <th>Groupname</th>
+                <td>{{ ftp_group.groupname }}</td>
+            </tr>
+            <tr>
+                <th>Gid</th>
+                <td>{{ ftp_group.gid }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('ftp_group_index') }}">back to list</a>
+
+    <a href="{{ path('ftp_group_edit', {'id': ftp_group.id}) }}">edit</a>
+
+    {{ include('ftp_group/_delete_form.html.twig') }}
+{% endblock %}

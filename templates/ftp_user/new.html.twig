@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New FtpUser{% endblock %}
+
+{% block body %}
+    <h1>Create new FtpUser</h1>
+
+    {{ include('ftp_user/_form.html.twig') }}
+
+    <a href="{{ path('ftp_user_index') }}">back to list</a>
+{% endblock %}

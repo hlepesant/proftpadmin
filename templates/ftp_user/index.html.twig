@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FtpUser index{% endblock %}
+
+{% block body %}
+    <h1>FtpUser for {{ ftpgroup.groupname }} </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Password</th>
+                <th>Uid</th>
+                <th>Home</th>
+                <th>Shell</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ftp_user in ftp_users %}
+            <tr>
+                <td>{{ ftp_user.id }}</td>
+                <td>{{ ftp_user.username }}</td>
+                <td>{{ ftp_user.firstname }}</td>
+                <td>{{ ftp_user.lastname }}</td>
+                <td>{{ ftp_user.password }}</td>
+                <td>{{ ftp_user.uid }}</td>
+                <td>{{ ftp_user.home }}</td>
+                <td>{{ ftp_user.shell }}</td>
+                <td>
+                    <a href="{{ path('ftp_user_show', {'id': ftp_user.id}) }}">show</a>
+                    <a href="{{ path('ftp_user_edit', {'id': ftp_user.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('ftp_user_new') }}">Create new</a>
+{% endblock %}

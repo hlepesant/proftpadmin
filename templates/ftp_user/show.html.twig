@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FtpUser{% endblock %}
+
+{% block body %}
+    <h1>FtpUser</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ftp_user.id }}</td>
+            </tr>
+            <tr>
+                <th>Username</th>
+                <td>{{ ftp_user.username }}</td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+                <td>{{ ftp_user.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Lastname</th>
+                <td>{{ ftp_user.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ ftp_user.password }}</td>
+            </tr>
+            <tr>
+                <th>Uid</th>
+                <td>{{ ftp_user.uid }}</td>
+            </tr>
+            <tr>
+                <th>Home</th>
+                <td>{{ ftp_user.home }}</td>
+            </tr>
+            <tr>
+                <th>Shell</th>
+                <td>{{ ftp_user.shell }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('ftp_user_index') }}">back to list</a>
+
+    <a href="{{ path('ftp_user_edit', {'id': ftp_user.id}) }}">edit</a>
+
+    {{ include('ftp_user/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New FtpGroup{% endblock %}
+
+{% block body %}
+    <h1>Create new FtpGroup</h1>
+
+    {{ include('ftp_group/_form.html.twig', {'button_label': 'Create'}) }}
+
+{% endblock %}

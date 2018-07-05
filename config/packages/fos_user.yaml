@@ -1,0 +1,19 @@
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: App\Entity\Adminuser
+    service:
+        mailer: fos_user.mailer.twig_swift
+    from_email:
+        address: "no-reply@mon-mail.fr"
+        sender_name: "no-reply@mon-mail.fr"
+    registration:
+        confirmation:
+            enabled: true
+            template: "@FOSUser/Registration/email.txt.twig"
+    resetting:
+        email:
+            template: email/password_resetting.email.twig
+            from_email:
+                address:        resetting@example.com
+                sender_name:    Demo Resetting
