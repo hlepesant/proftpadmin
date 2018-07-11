@@ -1,5 +1,8 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
+    <div style="padding-top: 0px;">
+        <div class="pwstrength_viewport_progress"></div>
+    </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
     <a href="{{ path('ftp_user_index', {'id_group': ftp_group.id}) }}"><button type="button" class="btn btn-secondary">Cancel</button></a>
 {{ form_end(form) }}

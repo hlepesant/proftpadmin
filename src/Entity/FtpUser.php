@@ -108,7 +108,8 @@ class FtpUser
 
     public function setPassword(string $password): self
     {
-        $this->password = $password;
+        #$this->password = $password;
+        $this->password = "{md5}".base64_encode(pack("H*", md5($password)));
 
         return $this;
     }

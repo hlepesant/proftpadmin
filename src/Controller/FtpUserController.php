@@ -54,13 +54,15 @@ class FtpUserController extends Controller
         $ftpUser = new FtpUser();
         $ftpUser->setUid($uid);
         $ftpUser->setShell('/bin/sh');
-        $ftpUser->setHome(sprintf('/opt/FtpSites/%s', $ftpGroup->getGroupname()));
         $ftpUser->setFtpGroup($ftpGroup);
 
         $form = $this->createForm(FtpUserType::class, $ftpUser);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+			$ftpUser->setHome(sprintf('/opt/FtpSites/%s/%s', $ftpGroup->getGroupname(), $ftpUser->getUsername()));
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($ftpUser);
             $em->flush();
@@ -126,7 +128,6 @@ class FtpUserController extends Controller
 		$form->remove('home');
 		$form->remove('shell');
 
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -138,10 +139,7 @@ class FtpUserController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        #$ftpGroup = $em->getRepository(FtpGroup::class)->find($ftpGroup);
 		
-		#print( $ftpUser->getUsername() ); exit;
-
         return $this->render('ftp_user/password.html.twig', [
             'ftp_user' => $ftpUser,
             'ftp_group' => $ftpGroup,

@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+<script src="{{ asset('js/ftp_user/diacritics.js') }}"></script>
+<script src="{{ asset('js/ftp_user/pwstrength-bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/ftp_user/new.js') }}"></script>
+{% endblock %}
+
 {% block title %}New FtpUser{% endblock %}
 
 {% block body %}
     <h1>Create new FtpUser</h1>
 
     {{ include('ftp_user/_form.html.twig') }}
-
-    <a href="{{ path('ftp_user_index', {'id_group': ftp_group.id}) }}">back to list</a>
 {% endblock %}
