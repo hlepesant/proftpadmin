@@ -2,9 +2,12 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FtpUserRepository")
@@ -54,11 +57,36 @@ class FtpUser
      */
     private $shell;
 
+	/**
+     * @ORM\Column(type="datetime", nullable=true)
+	 */
+	private $last_login;
+
+    /**
+     * @ORM\Column(type="integer", options={"default" : 0})
+     */
+    private $login_count;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" : 1})
+     */
+    private $active;
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\FtpGroup", inversedBy="members")
      * @ORM\JoinColumn(nullable=false)
      */
     private $ftpgroup;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\FtpHistory", mappedBy="user_id", orphanRemoval=true)
+     */
+    private $ftpHistories;
+
+    public function __construct()
+    {
+        $this->ftpHistories = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -158,6 +186,73 @@ class FtpUser
     public function setFtpgroup(?FtpGroup $ftpgroup): self
     {
         $this->ftpgroup = $ftpgroup;
+
+        return $this;
+    }
+
+    public function getLoginCount(): ?int
+    {
+        return $this->login_count;
+    }
+
+    public function setLoginCount(int $login_count): self
+    {
+        $this->login_count = $login_count;
+
+        return $this;
+    }
+
+    public function getLastLogin(): ?\DateTimeInterface
+    {
+        return $this->last_login;
+    }
+
+    public function setLastLogin(?\DateTimeInterface $last_login): self
+    {
+        $this->last_login = $last_login;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FtpHistory[]
+     */
+    public function getFtpHistories(): Collection
+    {
+        return $this->ftpHistories;
+    }
+
+    public function addFtpHistory(FtpHistory $ftpHistory): self
+    {
+        if (!$this->ftpHistories->contains($ftpHistory)) {
+            $this->ftpHistories[] = $ftpHistory;
+            $ftpHistory->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFtpHistory(FtpHistory $ftpHistory): self
+    {
+        if ($this->ftpHistories->contains($ftpHistory)) {
+            $this->ftpHistories->removeElement($ftpHistory);
+            // set the owning side to null (unless already changed)
+            if ($ftpHistory->getUserId() === $this) {
+                $ftpHistory->setUserId(null);
+            }
+        }
 
         return $this;
     }

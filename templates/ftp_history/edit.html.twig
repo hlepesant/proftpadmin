@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit FtpHistory{% endblock %}
+
+{% block body %}
+    <h1>Edit FtpHistory</h1>
+
+    {{ include('ftp_history/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('ftp_history_index') }}">back to list</a>
+
+    {{ include('ftp_history/_delete_form.html.twig') }}
+{% endblock %}

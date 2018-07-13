@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FtpHistory index{% endblock %}
+
+{% block body %}
+    <h1>FtpHistory index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Client_ip</th>
+                <th>Server_ip</th>
+                <th>Command</th>
+                <th>File</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ftp_history in ftp_histories %}
+            <tr>
+                <td>{{ ftp_history.id }}</td>
+                <td>{{ ftp_history.clientIp }}</td>
+                <td>{{ ftp_history.serverIp }}</td>
+                <td>{{ ftp_history.command }}</td>
+                <td>{{ ftp_history.file }}</td>
+                <td>{{ ftp_history.status }}</td>
+                <td>{{ ftp_history.date ? ftp_history.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

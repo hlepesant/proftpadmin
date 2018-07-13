@@ -33,6 +33,11 @@ class FtpGroup
     private $gid;
 
     /**
+     * @ORM\Column(type="boolean", options={"default" : 1})
+     */
+    private $active;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\FtpUser", mappedBy="ftpgroup")
      */
     private $members;
@@ -103,6 +108,18 @@ class FtpGroup
                 $member->setFtpgroup(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }

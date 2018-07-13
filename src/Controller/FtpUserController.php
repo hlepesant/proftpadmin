@@ -55,6 +55,7 @@ class FtpUserController extends Controller
         $ftpUser->setUid($uid);
         $ftpUser->setShell('/bin/sh');
         $ftpUser->setFtpGroup($ftpGroup);
+        $ftpUser->setLoginCount(0);
 
         $form = $this->createForm(FtpUserType::class, $ftpUser);
         $form->handleRequest($request);
