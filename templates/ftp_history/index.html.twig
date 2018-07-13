@@ -3,31 +3,27 @@
 {% block title %}FtpHistory index{% endblock %}
 
 {% block body %}
-    <h1>FtpHistory index</h1>
+    <h1><a href="{{ path('ftp_user_index', { 'id_group': ftp_group.id }) }}"><img src="{{ asset('/media/famfam/arrow_left.png') }}" alt="Back" /></a>
+    Operations by "{{ ftp_user.firstname }} {{ ftp_user.lastname }}"</h1>
 
-    <table class="table">
-        <thead>
+    <table class="table table-striped">
+        <thead class="thead-dark">
             <tr>
-                <th>Id</th>
-                <th>Client_ip</th>
-                <th>Server_ip</th>
-                <th>Command</th>
-                <th>File</th>
-                <th>Status</th>
-                <th>Date</th>
-                <th>actions</th>
+                <th scope="col" class="col-sm-2">Date</th>
+                <th scope="col" class="col-sm-1">Client ip</th>
+                <th scope="col" class="col-sm-2">Operation</th>
+                <th scope="col" class="col-sm-5">File</th>
+                <th scope="col" class="col-sm-1">Status</th>
             </tr>
         </thead>
         <tbody>
         {% for ftp_history in ftp_histories %}
             <tr>
-                <td>{{ ftp_history.id }}</td>
+                <td>{{ ftp_history.date ? ftp_history.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ ftp_history.clientIp }}</td>
-                <td>{{ ftp_history.serverIp }}</td>
-                <td>{{ ftp_history.command }}</td>
+                <td>{{ ftp_history.operation}}</td>
                 <td>{{ ftp_history.file }}</td>
                 <td>{{ ftp_history.status }}</td>
-                <td>{{ ftp_history.date ? ftp_history.date|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         {% else %}
             <tr>

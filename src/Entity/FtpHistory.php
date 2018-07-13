@@ -13,7 +13,7 @@ class FtpHistory
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -26,12 +26,7 @@ class FtpHistory
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $server_ip;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $command;
+    private $operation;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -49,7 +44,7 @@ class FtpHistory
     private $date;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\FtpUser", inversedBy="histories")
+     * @ORM\ManyToOne(targetEntity="App\Entity\FtpUser", inversedBy="ftpHistories")
      * @ORM\JoinColumn(nullable=false)
      */
     private $ftpuser;
@@ -83,14 +78,14 @@ class FtpHistory
         return $this;
     }
 
-    public function getCommand(): ?string
+    public function getOperation(): ?string
     {
-        return $this->command;
+        return $this->operation;
     }
 
-    public function setCommand(?string $command): self
+    public function setOperation(?string $operation): self
     {
-        $this->command = $command;
+        $this->operation = $operation;
 
         return $this;
     }
@@ -136,7 +131,7 @@ class FtpHistory
         return $this->ftpuser;
     }
 
-    public function setFtpuser(?FtpUser $user): self
+    public function setFtpuser(?FtpUser $ftpuser): self
     {
         $this->ftpuser = $ftpuser;
 

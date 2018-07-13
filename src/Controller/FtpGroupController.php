@@ -33,6 +33,7 @@ class FtpGroupController extends Controller
             ->getNextGroupId();
 
         $ftpGroup = new FtpGroup();
+        $ftpGroup->setActive(true);
         $ftpGroup->setGid($gid);
 
         $form = $this->createForm(FtpGroupType::class, $ftpGroup);

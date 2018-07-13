@@ -17,7 +17,7 @@ class FtpUser
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -79,7 +79,7 @@ class FtpUser
     private $ftpgroup;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\FtpHistory", mappedBy="user_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\FtpHistory", mappedBy="ftpuser", orphanRemoval=true)
      */
     private $ftpHistories;
 

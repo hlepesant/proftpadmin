@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,6 +30,10 @@ class FtpUserType extends AbstractType
 				'required' => true,
 				'first_options'  => array('label' => 'Password'),
 				'second_options' => array('label' => 'Repeat Password'),
+			))
+			->add('active', CheckboxType::class, array(
+				'label'    => 'Activate',
+				'required' => false,
 			))
 			/*
             ->add('uid', TextType::class, array(

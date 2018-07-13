@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class FtpGroupType extends AbstractType
@@ -15,7 +16,10 @@ class FtpGroupType extends AbstractType
     {
         $builder
             ->add('groupname')
-            #->add('gid')
+			->add('active', CheckboxType::class, array(
+				'label'    => 'Activate',
+				'required' => false,
+			))
             ->add('gid', TextType::class, array(
                 'disabled' => 'true'
             )) 
