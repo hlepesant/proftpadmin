@@ -62,7 +62,7 @@ class FtpUserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+			
 			$ftpUser->setHome(sprintf('/opt/FtpSites/%s/%s', $ftpGroup->getGroupname(), $ftpUser->getUsername()));
 
             $em = $this->getDoctrine()->getManager();
@@ -97,12 +97,15 @@ class FtpUserController extends Controller
     public function edit(Request $request, FtpUser $ftpUser, Ftpgroup $ftpGroup): Response
     {
         $form = $this->createForm(FtpUserType::class, $ftpUser);
+
+		$form->remove('password');
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-			return $this->redirectToRoute('ftp_user_edit', [
+			return $this->redirectToRoute('ftp_user_index', [
 				'id' => $ftpUser->getId(),
 				'id_group' => $ftpGroup->getId(),
 			]);
@@ -129,6 +132,7 @@ class FtpUserController extends Controller
 		$form->remove('lastname');
 		$form->remove('home');
 		$form->remove('shell');
+		$form->remove('active');
 
         $form->handleRequest($request);
 

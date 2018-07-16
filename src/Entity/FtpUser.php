@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FtpUserRepository")
  * @UniqueEntity("username")
@@ -137,7 +138,10 @@ class FtpUser
     public function setPassword(string $password): self
     {
         #$this->password = $password;
-        $this->password = "{md5}".base64_encode(pack("H*", md5($password)));
+        #$this->password = "{md5}".base64_encode(pack("H*", md5($password)));
+		#$this->password = "{Scrypt}".password_hash($password, PASSWORD_DEFAULT);
+		#$this->password = "{crypt}".password_hash($password, PASSWORD_BCRYPT);
+		$this->password = $this->hash_password($password);
 
         return $this;
     }
@@ -256,4 +260,15 @@ class FtpUser
 
         return $this;
     }
+
+
+	private function hash_password($password) // SSHA with random 4-character salt
+	{
+		#$salt = substr(str_shuffle(str_repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',4)),0,4);
+		#return '{SSHA}' . base64_encode(sha1( $password.$salt, TRUE ). $salt);
+
+		$salt = substr(sha1(rand()), 0, 16);
+		return "{SHA256}" . base64_encode(hash('sha256', $password, true));
+
+	}
 }
