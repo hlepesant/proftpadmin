@@ -1,6 +1,5 @@
 # Cache, session files and logs (Symfony4)
 /var/*
-/bin/*
 
 # Build data
 /build/
