@@ -10,27 +10,22 @@
             <tr>
                 <th scope="col" class="col-sm-5">Name</th>
                 <th scope="col" class="col-sm-5"># Members</th>
+                <th scope="col" class="col-sm-1">status</th>
                 <th scope="col" class="col-sm-1 text-right" colspan="3"><a href="{{ path('ftp_group_new') }}" class="text-white"><img src="{{ asset('/media/famfam/add.png') }}" alt="Create" /></a></th>
             </tr>
         </thead>
         <tbody>
 
         {% for ftp_group in ftp_groups %}
-		{#
-            <tr>
-                <td>{{ ftp_group.id }}</td>
-                <td>{{ ftp_group.groupname }}</td>
-                <td>{{ ftp_group.gid }}</td>
-                <td>
-                    <a href="{{ path('ftp_group_show', {'id': ftp_group.id}) }}">show</a>
-                    <a href="{{ path('ftp_group_edit', {'id': ftp_group.id}) }}">edit</a>
-                </td>
-            </tr>
-			#}
-
             <tr>
                 <td>{{ ftp_group.groupname }}</td>
                 <td>{{ ftp_group.members|length }}</td>
+                <td>{% if ftp_group.active %} 
+					<img src="{{ asset('/media/famfam/accept.png') }}" alt="enabled" />
+				{% else %}
+					<img src="{{ asset('/media/famfam/delete.png') }}" alt="disabled" />
+				{% endif %}
+				</td>
                 <td><a href="{{ path('ftp_user_index', { 'id_group': ftp_group.id }) }}"><img src="{{ asset('/media/famfam/group.png') }}" alt="Users" /></a></td>
                 <td><a href="{{ path('ftp_group_edit', { 'id': ftp_group.id }) }}"><img src="{{ asset('/media/famfam/pencil.png') }}" alt="Edit" /></a></td>
                 <td>
