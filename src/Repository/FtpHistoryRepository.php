@@ -22,6 +22,40 @@ class FtpHistoryRepository extends ServiceEntityRepository
 //    /**
 //     * @return FtpHistory[] Returns an array of FtpHistory objects
 //     */
+
+    public function findByUserId($id_user)
+    {
+        return $this->createQueryBuilder('h')
+            ->andWhere('h.ftpuser = :val')
+            ->setParameter('val', $id_user)
+            ->orderBy('h.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+	/*
+	 * SELECT username, file, operation, status, ftp_history.date as date FROM ftp_history INNER JOIN ftp_user ON ftp_history.ftpuser_id = ftp_user.id WHERE ftp_user.id = 104 AND ftp_user.ftpgroup_id = 4;
+	 */
+	public function findByUserAndGroupId($id_user, $id_group)
+	{
+        return $this->createQueryBuilder('h')
+			->innerJoin('h.ftpuser', 'u')
+			->addSelect('u')
+			->innerJoin('u.ftpgroup', 'g')
+			->addSelect('g')
+            ->andWhere('h.ftpuser = :idu')
+            ->andWhere('g.id = :idg')
+            ->setParameter('idu', $id_user)
+            ->setParameter('idg', $id_group)
+            ->orderBy('h.date', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+	}
+
+
+
     /*
     public function findByExampleField($value)
     {

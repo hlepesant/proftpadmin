@@ -51,8 +51,9 @@ class FtpHistoryController extends Controller
 		return $this->render('ftp_history/index.html.twig', [
 			'ftp_group' => $ftpGroup,
 			'ftp_user' => $ftpUser,
-			'ftp_histories' => $ftpHistoryRepository->findAll(),
-			#'ftp_histories' => $ftpUserRepository->findByGroupId($ftpGroup->getId())
+			#'ftp_histories' => $ftpHistoryRepository->findAll(),
+			#'ftp_histories' => $ftpHistoryRepository->findByUserId($ftpUser->getId())
+			'ftp_histories' => $ftpHistoryRepository->findByUserAndGroupId($ftpUser->getId(), $ftpGroup->getId())
 		]);
     }
 

@@ -9,8 +9,10 @@ jQuery(document).ready(function () {
 
     $('#ftp_user_firstname, #ftp_user_lastname').on('change blur click', function(){
 
-        var firstname = $('#ftp_user_firstname').val().toLowerCase();
-        var lastname = $('#ftp_user_lastname').val().toLowerCase().replace(/\s/g, '');
+        //var firstname = $('#ftp_user_firstname').val().toLowerCase();
+        //var lastname = $('#ftp_user_lastname').val().toLowerCase().replace(/\s/g, '');
+        var firstname = $('#ftp_user_firstname').val();
+        var lastname = $('#ftp_user_lastname').val().replace(/\s/g, '');
 
         if ( firstname.length && lastname.length ) {
             var initiale = firstname.split('')[0];

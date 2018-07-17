@@ -9,10 +9,11 @@
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
-                <th scope="col" class="col-sm-1">Identity</th>
+                <th scope="col" class="col-sm-2">Identity</th>
                 <th scope="col" class="col-sm-1">Username</th>
-                <th scope="col" class="col-sm-1">Last login</th>
+                <th scope="col" class="col-sm-2">Last login</th>
                 <th scope="col" class="col-sm-1">count</th>
+                <th scope="col" class="col-sm-1">status</th>
                 <th scope="col" class="col-sm-2 text-right" colspan="2"><a href="{{ path('ftp_user_new', {'id_group': ftp_group.id}) }}" class="text-white"><img src="{{ asset('/media/famfam/add.png') }}" alt="Create" /></a></th>
             </tr>
         </thead>
@@ -23,6 +24,12 @@
                 <td>{{ ftp_user.username }}</td>
                 <td>{{ ftp_user.lastlogin ? ftp_user.lastlogin|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ ftp_user.logincount }}</td>
+                <td>{% if ftp_user.active %} 
+					<img src="{{ asset('/media/famfam/accept.png') }}" alt="enabled" />
+				{% else %}
+					<img src="{{ asset('/media/famfam/delete.png') }}" alt="disabled" />
+				{% endif %}
+				</td>
                 <td class="text-right">
 					<a href="{{ path('ftp_history_index', {'id_group': ftp_group.id, 'id_user': ftp_user.id}) }}"><img src="{{ asset('/media/famfam/report.png') }}" alt="History" /></a>
 					<a href="{{ path('ftp_user_edit', {'id_group': ftp_group.id, 'id': ftp_user.id}) }}"><img src="{{ asset('/media/famfam/pencil.png') }}" alt="Edit" /></a>
