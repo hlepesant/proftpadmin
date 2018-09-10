@@ -29,6 +29,10 @@ class ComposerStaticInit632e02d729951ac214a0f051b5868604
         ),
         'W' => 
         array (
+            'WhiteOctober\\PagerfantaBundle\\View\\' => 35,
+            'WhiteOctober\\PagerfantaBundle\\Twig\\' => 35,
+            'WhiteOctober\\PagerfantaBundle\\EventListener\\' => 44,
+            'WhiteOctober\\PagerfantaBundle\\DependencyInjection\\' => 50,
             'Webmozart\\Assert\\' => 17,
         ),
         'T' => 
@@ -152,6 +156,22 @@ class ComposerStaticInit632e02d729951ac214a0f051b5868604
         'Zend\\Code\\' => 
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-code/src',
+        ),
+        'WhiteOctober\\PagerfantaBundle\\View\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/white-october/pagerfanta-bundle/View',
+        ),
+        'WhiteOctober\\PagerfantaBundle\\Twig\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/white-october/pagerfanta-bundle/Twig',
+        ),
+        'WhiteOctober\\PagerfantaBundle\\EventListener\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/white-october/pagerfanta-bundle/EventListener',
+        ),
+        'WhiteOctober\\PagerfantaBundle\\DependencyInjection\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/white-october/pagerfanta-bundle/DependencyInjection',
         ),
         'Webmozart\\Assert\\' => 
         array (
@@ -444,6 +464,9 @@ class ComposerStaticInit632e02d729951ac214a0f051b5868604
         'Doctrine\\Common\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/common/lib/Doctrine/Common',
+            1 => __DIR__ . '/..' . '/doctrine/event-manager/lib/Doctrine/Common',
+            2 => __DIR__ . '/..' . '/doctrine/persistence/lib/Doctrine/Common',
+            3 => __DIR__ . '/..' . '/doctrine/reflection/lib/Doctrine/Common',
         ),
         'Doctrine\\Bundle\\MigrationsBundle\\' => 
         array (
@@ -492,6 +515,10 @@ class ComposerStaticInit632e02d729951ac214a0f051b5868604
             array (
                 0 => __DIR__ . '/..' . '/ocramius/proxy-manager/src',
             ),
+            'Pagerfanta\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/pagerfanta/pagerfanta/src',
+            ),
         ),
         'D' => 
         array (
@@ -516,6 +543,7 @@ class ComposerStaticInit632e02d729951ac214a0f051b5868604
         'Locale' => __DIR__ . '/..' . '/symfony/intl/Resources/stubs/Locale.php',
         'NumberFormatter' => __DIR__ . '/..' . '/symfony/intl/Resources/stubs/NumberFormatter.php',
         'SqlFormatter' => __DIR__ . '/..' . '/jdorn/sql-formatter/lib/SqlFormatter.php',
+        'WhiteOctober\\PagerfantaBundle\\WhiteOctoberPagerfantaBundle' => __DIR__ . '/..' . '/white-october/pagerfanta-bundle/WhiteOctoberPagerfantaBundle.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

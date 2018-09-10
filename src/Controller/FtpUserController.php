@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+
 /**
  * @Route("/ftp/user")
  */
@@ -34,9 +35,13 @@ class FtpUserController extends Controller
             );
         }
 
+		#$adapter = new DoctrineORMAdapter($queryBuilder);
+		#$pagerfanta = new Pagerfanta($adapter);
+
 		return $this->render('ftp_user/index.html.twig', [
 			'ftp_group' => $ftpGroup,
-			'ftp_users' => $ftpUserRepository->findByGroupId($ftpGroup->getId())
+			'ftp_users' => $ftpUserRepository->findByGroupId($ftpGroup->getId()),
+		    #'my_pager' => $pagerfanta,
 		]);
 
     }

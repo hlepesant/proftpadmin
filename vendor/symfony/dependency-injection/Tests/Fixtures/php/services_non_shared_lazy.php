@@ -81,10 +81,10 @@ class ProjectServiceContainer extends Container
      */
     protected function getFooService($lazyLoad = true)
     {
-        // lazy factory
+        // lazy factory for stdClass
 
         return new \stdClass();
     }
 }
 
-// proxy code
+// proxy code for stdClass

@@ -6,6 +6,9 @@ use App\Entity\FtpUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+#use Pagerfanta\Adapter\DoctrineORMAdapter;
+
 /**
  * @method FtpUser|null find($id, $lockMode = null, $lockVersion = null)
  * @method FtpUser|null findOneBy(array $criteria, array $orderBy = null)
@@ -16,9 +19,10 @@ class FtpUserRepository extends ServiceEntityRepository
 {
 	private $minimum_uid = 10001;
 
-    public function __construct(RegistryInterface $registry)
+    public function __construct(RegistryInterface $registry, ParameterBagInterface $params)
     {
         parent::__construct($registry, FtpUser::class);
+		$this->params = $params;
     }
 
 //    /**
@@ -34,6 +38,20 @@ class FtpUserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function findByGroupIdPaginate($id_group)
+    {
+        $queryBuilder = $this->createQueryBuilder('u')
+            ->andWhere('u.ftpgroup = :val')
+            ->setParameter('val', $id_group)
+            ->orderBy('u.username', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+		$adapter = new DoctrineORMAdapter($queryBuilder);
+		return $adapter;
     }
 
     /*
@@ -63,12 +81,17 @@ class FtpUserRepository extends ServiceEntityRepository
     */
 
     public function getNextUserId() {
-        $nextid = $this->createQueryBuilder('u')
-            ->select('MAX(u.uid) + 1')
-            ->getQuery()
-            ->getSingleScalarResult();
 
-        if ( is_null($nextid)) $nextid = $this->minimum_uid;
+		$nextid = $this->params->get('ftp_user_id');
+
+		if ( $nextid === 'auto' ) {
+			$nextid = $this->createQueryBuilder('u')
+        	    ->select('MAX(u.uid) + 1')
+        	    ->getQuery()
+        	    ->getSingleScalarResult();
+
+        	if ( is_null($nextid)) $nextid = $this->minimum_uid;
+		}
         return $nextid;
     }
 }

@@ -9,12 +9,12 @@
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
-                <th scope="col" class="col-sm-2">Identity</th>
-                <th scope="col" class="col-sm-1">Username</th>
-                <th scope="col" class="col-sm-2">Last login</th>
-                <th scope="col" class="col-sm-1">count</th>
-                <th scope="col" class="col-sm-1">status</th>
-                <th scope="col" class="col-sm-2 text-right" colspan="2"><a href="{{ path('ftp_user_new', {'id_group': ftp_group.id}) }}" class="text-white"><img src="{{ asset('/media/famfam/add.png') }}" alt="Create" /></a></th>
+                <th scope="col">Identity</th>
+                <th scope="col">Username</th>
+                <th scope="col">Last login</th>
+                <th scope="col">count</th>
+                <th scope="col">status</th>
+                <th scope="col" colspan="2"><a href="{{ path('ftp_user_new', {'id_group': ftp_group.id}) }}" class="text-white"><img src="{{ asset('/media/famfam/add.png') }}" alt="Create" /></a></th>
             </tr>
         </thead>
         <tbody>
@@ -48,5 +48,11 @@
         {% endfor %}
         </tbody>
     </table>
+
+	<div class="pagerfanta">
+	<!--
+	    {* pagerfanta(my_pager, 'twitter_bootstrap4') *}
+		-->
+	</div>
 
 {% endblock %}

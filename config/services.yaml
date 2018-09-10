@@ -2,6 +2,10 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    #ftp_group_id: 'auto'
+    #ftp_user_id: 'auto'
+    ftp_group_id: 33
+    ftp_user_id: 1002
 
 services:
     # default configuration for services in *this* file

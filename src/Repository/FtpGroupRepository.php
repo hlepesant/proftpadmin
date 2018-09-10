@@ -6,6 +6,8 @@ use App\Entity\FtpGroup;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+
 /**
  * @method FtpGroup|null find($id, $lockMode = null, $lockVersion = null)
  * @method FtpGroup|null findOneBy(array $criteria, array $orderBy = null)
@@ -14,11 +16,14 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class FtpGroupRepository extends ServiceEntityRepository
 {
+	private $params;
+
 	private $minimum_gid = 10001;
 
-    public function __construct(RegistryInterface $registry)
+    public function __construct(RegistryInterface $registry, ParameterBagInterface $params)
     {
         parent::__construct($registry, FtpGroup::class);
+		$this->params = $params;
     }
 
 //    /**
@@ -51,12 +56,17 @@ class FtpGroupRepository extends ServiceEntityRepository
     */
 
     public function getNextGroupId() {
-        $nextid = $this->createQueryBuilder('g')
-            ->select('MAX(g.gid) + 1')
-            ->getQuery()
-            ->getSingleScalarResult();
 
-        if ( is_null($nextid)) $nextid = $this->minimum_gid;
+		$nextid = $this->params->get('ftp_group_id');
+
+		if ( $nextid === 'auto' ) {
+			$nextid = $this->createQueryBuilder('g')
+        	    ->select('MAX(g.gid) + 1')
+        	    ->getQuery()
+        	    ->getSingleScalarResult();
+
+        	if ( is_null($nextid)) $nextid = $this->minimum_gid;
+		}
         return $nextid;
     }
 }

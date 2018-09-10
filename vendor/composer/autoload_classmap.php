@@ -11,4 +11,5 @@ return array(
     'Locale' => $vendorDir . '/symfony/intl/Resources/stubs/Locale.php',
     'NumberFormatter' => $vendorDir . '/symfony/intl/Resources/stubs/NumberFormatter.php',
     'SqlFormatter' => $vendorDir . '/jdorn/sql-formatter/lib/SqlFormatter.php',
+    'WhiteOctober\\PagerfantaBundle\\WhiteOctoberPagerfantaBundle' => $vendorDir . '/white-october/pagerfanta-bundle/WhiteOctoberPagerfantaBundle.php',
 );

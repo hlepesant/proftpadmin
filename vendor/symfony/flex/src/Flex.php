@@ -14,12 +14,12 @@ namespace Symfony\Flex;
 use Composer\Composer;
 use Composer\Console\Application;
 use Composer\DependencyResolver\Operation\InstallOperation;
-use Composer\DependencyResolver\Operation\UpdateOperation;
 use Composer\DependencyResolver\Operation\UninstallOperation;
+use Composer\DependencyResolver\Operation\UpdateOperation;
 use Composer\DependencyResolver\Pool;
 use Composer\Downloader\FileDownloader;
-use Composer\Factory;
 use Composer\EventDispatcher\EventSubscriberInterface;
+use Composer\Factory;
 use Composer\Installer;
 use Composer\Installer\InstallerEvent;
 use Composer\Installer\InstallerEvents;
@@ -30,12 +30,15 @@ use Composer\IO\IOInterface;
 use Composer\IO\NullIO;
 use Composer\Json\JsonFile;
 use Composer\Json\JsonManipulator;
+use Composer\Package\Comparer\Comparer;
 use Composer\Package\Locker;
 use Composer\Package\PackageInterface;
 use Composer\Plugin\PluginEvents;
 use Composer\Plugin\PluginInterface;
 use Composer\Plugin\PreFileDownloadEvent;
 use Composer\Repository\ComposerRepository as BaseComposerRepository;
+use Composer\Repository\RepositoryFactory;
+use Composer\Repository\RepositoryManager;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
 use Symfony\Component\Console\Input\ArgvInput;
@@ -101,6 +104,21 @@ class Flex implements PluginInterface, EventSubscriberInterface
 
         $rfs = Factory::createRemoteFilesystem($this->io, $this->config);
         $this->rfs = new ParallelDownloader($this->io, $this->config, $rfs->getOptions(), $rfs->isTlsDisabled());
+
+        $manager = RepositoryFactory::manager($this->io, $this->config, $composer->getEventDispatcher(), $this->rfs);
+        $setRepositories = \Closure::bind(function (RepositoryManager $manager) {
+            $manager->repositoryClasses = $this->repositoryClasses;
+            $manager->setRepositoryClass('composer', TruncatedComposerRepository::class);
+            $manager->repositories = $this->repositories;
+            $i = 0;
+            foreach (RepositoryFactory::defaultRepos(null, $this->config, $manager) as $repo) {
+                $manager->repositories[$i++] = $repo;
+            }
+            $manager->setLocalRepository($this->getLocalRepository());
+        }, $composer->getRepositoryManager(), RepositoryManager::class);
+
+        $setRepositories($manager);
+        $composer->setRepositoryManager($manager);
         $this->configurator = new Configurator($composer, $io, $this->options);
         $this->downloader = new Downloader($composer, $io, $this->rfs);
         $this->downloader->setFlexId($this->getFlexId());
@@ -156,7 +174,12 @@ class Flex implements PluginInterface, EventSubscriberInterface
             }
 
             if ('create-project' === $command) {
-                $input->setInteractive(false);
+                // detect Composer >=1.7 (using the Composer::VERSION constant doesn't work with snapshot builds)
+                if (class_exists(Comparer::class)) {
+                    $input->setOption('remove-vcs', true);
+                } else {
+                    $input->setInteractive(false);
+                }
             } elseif ('update' === $command) {
                 $this->displayThanksReminder = 1;
             }
@@ -262,8 +285,8 @@ class Flex implements PluginInterface, EventSubscriberInterface
         }
 
         if (2 === $this->displayThanksReminder) {
-            $love = '\\' === DIRECTORY_SEPARATOR ? 'love' : '💖 ';
-            $star = '\\' === DIRECTORY_SEPARATOR ? 'star' : '★ ';
+            $love = '\\' === \DIRECTORY_SEPARATOR ? 'love' : '💖 ';
+            $star = '\\' === \DIRECTORY_SEPARATOR ? 'star' : '★ ';
 
             $this->io->writeError('');
             $this->io->writeError('What about running <comment>composer global require symfony/thanks && composer thanks</> now?');
@@ -445,7 +468,7 @@ class Flex implements PluginInterface, EventSubscriberInterface
         $this->cacheDirPopulated = true;
 
         $downloads = [];
-        $cacheDir = rtrim($this->config->get('cache-files-dir'), '\/').DIRECTORY_SEPARATOR;
+        $cacheDir = rtrim($this->config->get('cache-files-dir'), '\/').\DIRECTORY_SEPARATOR;
         $getCacheKey = function (PackageInterface $package, $processedUrl) {
             return $this->getCacheKey($package, $processedUrl);
         };

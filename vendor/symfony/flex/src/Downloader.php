@@ -14,8 +14,8 @@ namespace Symfony\Flex;
 use Composer\Cache;
 use Composer\Composer;
 use Composer\DependencyResolver\Operation\OperationInterface;
-use Composer\DependencyResolver\Operation\UpdateOperation;
 use Composer\DependencyResolver\Operation\UninstallOperation;
+use Composer\DependencyResolver\Operation\UpdateOperation;
 use Composer\Downloader\TransportException;
 use Composer\IO\IOInterface;
 use Composer\Json\JsonFile;
@@ -25,7 +25,7 @@ use Composer\Json\JsonFile;
  */
 class Downloader
 {
-    private static $DEFAULT_ENDPOINT = 'https://symfony.sh';
+    private static $DEFAULT_ENDPOINT = 'https://flex.symfony.com';
     private static $MAX_LENGTH = 1000;
 
     private $io;
