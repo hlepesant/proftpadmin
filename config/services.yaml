@@ -6,6 +6,8 @@ parameters:
     #ftp_user_id: 'auto'
     ftp_group_id: 1001
     ftp_user_id: 'auto'
+    ftp_base_path: '/opt/FtpSites'
+    #ftp_base_path: '/space/FtpSites'
 
 services:
     # default configuration for services in *this* file

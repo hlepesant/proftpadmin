@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+#use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+#use Pagerfanta\Adapter\DoctrineORMAdapter;
 
 /**
  * @Route("/ftp/user")
@@ -35,6 +37,7 @@ class FtpUserController extends Controller
             );
         }
 
+		#$queryBuilder = $entityManager->createQueryBuilder()
 		#$adapter = new DoctrineORMAdapter($queryBuilder);
 		#$pagerfanta = new Pagerfanta($adapter);
 
@@ -67,8 +70,13 @@ class FtpUserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-			
-			$ftpUser->setHome(sprintf('/opt/FtpSites/%s/%s', $ftpGroup->getGroupname(), $ftpUser->getUsername()));
+
+			$ftpUser->setHome(sprintf('%s/%s/%s',
+				$this->container->getParameter('ftp_base_path'),
+				$ftpGroup->getGroupname(),
+				$ftpUser->getUsername())
+			);
+
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($ftpUser);
