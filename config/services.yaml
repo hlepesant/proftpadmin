@@ -4,8 +4,8 @@ parameters:
     locale: 'en'
     #ftp_group_id: 'auto'
     #ftp_user_id: 'auto'
-    ftp_group_id: 33
-    ftp_user_id: 1002
+    ftp_group_id: 1001
+    ftp_user_id: 'auto'
 
 services:
     # default configuration for services in *this* file

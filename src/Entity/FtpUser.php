@@ -44,7 +44,7 @@ class FtpUser
     private $password;
 
     /**
-     * @ORM\Column(type="integer", unique=true)
+     * @ORM\Column(type="integer")
      */
     private $uid;
 

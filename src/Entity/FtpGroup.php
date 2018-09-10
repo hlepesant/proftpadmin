@@ -28,7 +28,7 @@ class FtpGroup
     private $groupname;
 
     /**
-     * @ORM\Column(type="integer", unique=true)
+     * @ORM\Column(type="integer")
      */
     private $gid;
 

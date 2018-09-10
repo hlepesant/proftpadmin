@@ -8,17 +8,15 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20180704192825 extends AbstractMigration
+final class Version20180910124531 extends AbstractMigration
 {
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_5B38AA3B90DA8F85 ON ftp_group (groupname)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_5B38AA3B4C397118 ON ftp_group (gid)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_7637DEE3F85E0677 ON ftp_user (username)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_7637DEE3539B0606 ON ftp_user (uid)');
+        $this->addSql('DROP INDEX uniq_5b38aa3b4c397118');
+        $this->addSql('DROP INDEX uniq_7637dee3539b0606');
     }
 
     public function down(Schema $schema) : void
@@ -27,9 +25,7 @@ final class Version20180704192825 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
         $this->addSql('CREATE SCHEMA public');
-        $this->addSql('DROP INDEX UNIQ_5B38AA3B90DA8F85');
-        $this->addSql('DROP INDEX UNIQ_5B38AA3B4C397118');
-        $this->addSql('DROP INDEX UNIQ_7637DEE3F85E0677');
-        $this->addSql('DROP INDEX UNIQ_7637DEE3539B0606');
+        $this->addSql('CREATE UNIQUE INDEX uniq_5b38aa3b4c397118 ON ftp_group (gid)');
+        $this->addSql('CREATE UNIQUE INDEX uniq_7637dee3539b0606 ON ftp_user (uid)');
     }
 }
