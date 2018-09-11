@@ -12,11 +12,11 @@
 namespace Symfony\Bundle\SecurityBundle\Tests\DependencyInjection;
 
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\DependencyInjection\Argument\IteratorArgument;
-use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension;
+use Symfony\Bundle\SecurityBundle\SecurityBundle;
+use Symfony\Component\DependencyInjection\Argument\IteratorArgument;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder;
 
@@ -257,7 +257,7 @@ abstract class CompleteConfigurationTest extends TestCase
             $this->assertArrayNotHasKey($matcherId, $matcherIds);
             $matcherIds[$matcherId] = true;
 
-            $i = count($matcherIds);
+            $i = \count($matcherIds);
             if (1 === $i) {
                 $this->assertEquals(array('ROLE_USER'), $attributes);
                 $this->assertEquals('https', $channel);

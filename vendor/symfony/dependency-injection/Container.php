@@ -14,11 +14,11 @@ namespace Symfony\Component\DependencyInjection;
 use Symfony\Component\DependencyInjection\Exception\EnvNotFoundException;
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Exception\ParameterCircularReferenceException;
-use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\DependencyInjection\ParameterBag\EnvPlaceholderParameterBag;
 use Symfony\Component\DependencyInjection\ParameterBag\FrozenParameterBag;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * Container is a dependency injection container.
@@ -230,7 +230,7 @@ class Container implements ResettableContainerInterface
     private function make(string $id, int $invalidBehavior)
     {
         if (isset($this->loading[$id])) {
-            throw new ServiceCircularReferenceException($id, array_keys($this->loading));
+            throw new ServiceCircularReferenceException($id, array_merge(array_keys($this->loading), array($id)));
         }
 
         $this->loading[$id] = true;
@@ -266,7 +266,7 @@ class Container implements ResettableContainerInterface
                     continue;
                 }
                 $lev = levenshtein($id, $knownId);
-                if ($lev <= strlen($id) / 3 || false !== strpos($knownId, $id)) {
+                if ($lev <= \strlen($id) / 3 || false !== strpos($knownId, $id)) {
                     $alternatives[] = $knownId;
                 }
             }

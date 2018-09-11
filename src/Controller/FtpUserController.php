@@ -13,8 +13,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
-#use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 #use Pagerfanta\Adapter\DoctrineORMAdapter;
+
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/ftp/user")
@@ -25,7 +26,7 @@ class FtpUserController extends Controller
      * @Route("/{id_group}", name="ftp_user_index", methods="GET")
      * @ParamConverter("ftpGroup", options={"id" = "id_group"})
      */
-    public function index(FtpUserRepository $ftpUserRepository, Ftpgroup $ftpGroup): Response
+    public function index(FtpUserRepository $ftpUserRepository, Ftpgroup $ftpGroup, Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -37,16 +38,26 @@ class FtpUserController extends Controller
             );
         }
 
-		#$queryBuilder = $entityManager->createQueryBuilder()
-		#$adapter = new DoctrineORMAdapter($queryBuilder);
-		#$pagerfanta = new Pagerfanta($adapter);
-
+/*
 		return $this->render('ftp_user/index.html.twig', [
 			'ftp_group' => $ftpGroup,
 			'ftp_users' => $ftpUserRepository->findByGroupId($ftpGroup->getId()),
 		    #'my_pager' => $pagerfanta,
 		]);
+*/
 
+		$ftpUserRepository = $em->getRepository(FtpUser::class);
+		$allFtpUserQuery = $ftpUserRepository->findByGroupIdPaginator($ftpGroup->getId());
+		$paginator = $this->get('knp_paginator');
+		$ftp_users = $paginator->paginate(
+			$allFtpUserQuery,
+			$request->query->getInt('page', 1)
+		); 
+
+		return $this->render('ftp_user/index.html.twig', [
+			'ftp_group' => $ftpGroup,
+			'ftp_users' => $ftp_users,
+		]);
     }
 
     /**

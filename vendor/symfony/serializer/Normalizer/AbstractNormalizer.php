@@ -12,12 +12,12 @@
 namespace Symfony\Component\Serializer\Normalizer;
 
 use Symfony\Component\Serializer\Exception\CircularReferenceException;
-use Symfony\Component\Serializer\Exception\MissingConstructorArgumentsException;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\LogicException;
+use Symfony\Component\Serializer\Exception\MissingConstructorArgumentsException;
 use Symfony\Component\Serializer\Exception\RuntimeException;
-use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\Serializer\Mapping\AttributeMetadataInterface;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 use Symfony\Component\Serializer\SerializerAwareInterface;
 use Symfony\Component\Serializer\SerializerAwareTrait;
@@ -260,7 +260,7 @@ abstract class AbstractNormalizer implements NormalizerInterface, DenormalizerIn
      */
     protected function isAllowedAttribute($classOrObject, $attribute, $format = null, array $context = array())
     {
-        if (in_array($attribute, $this->ignoredAttributes)) {
+        if (\in_array($attribute, $this->ignoredAttributes)) {
             return false;
         }
 
@@ -269,8 +269,8 @@ abstract class AbstractNormalizer implements NormalizerInterface, DenormalizerIn
             return true;
         }
 
-        if (isset($context[self::ATTRIBUTES]) && is_array($context[self::ATTRIBUTES])) {
-            return in_array($attribute, $context[self::ATTRIBUTES], true);
+        if (isset($context[self::ATTRIBUTES]) && \is_array($context[self::ATTRIBUTES])) {
+            return \in_array($attribute, $context[self::ATTRIBUTES], true);
         }
 
         return true;

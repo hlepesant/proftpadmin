@@ -1,0 +1,22 @@
+label_previous: Précédent
+label_next: Suivant
+ftpgroup:
+    list: Liste des sociétés
+    create: Créer
+    edit: Editer
+    users: Les utilisateurs
+    all_members: Supprimer tous les comptes
+    name: Nom
+    number_of_members: Membres
+    status: Etat
+    status_enable: Activé
+    status_disable: Désactivé
+    create_new: Ajouter une société
+Groupname: Nom
+Activate: Actif
+Gid: id
+Cancel: Annuler
+Save: Enregister
+
+ftpuser:
+    list: Liste des comptes

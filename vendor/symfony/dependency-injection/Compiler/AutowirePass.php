@@ -144,11 +144,12 @@ class AutowirePass extends AbstractRecursivePass
      */
     private function autowireCalls(\ReflectionClass $reflectionClass, bool $isRoot): array
     {
+        $this->decoratedId = null;
+        $this->decoratedClass = null;
+        $this->getPreviousValue = null;
+
         if ($isRoot && ($definition = $this->container->getDefinition($this->currentId)) && $this->container->has($this->decoratedId = $definition->innerServiceId)) {
             $this->decoratedClass = $this->container->findDefinition($this->decoratedId)->getClass();
-        } else {
-            $this->decoratedId = null;
-            $this->decoratedClass = null;
         }
 
         foreach ($this->methodCalls as $i => $call) {
@@ -416,7 +417,7 @@ class AutowirePass extends AbstractRecursivePass
         }
 
         $extraContext = $extraContext ? ' '.$extraContext : '';
-        if (1 < $len = count($aliases)) {
+        if (1 < $len = \count($aliases)) {
             $message = sprintf('Try changing the type-hint%s to one of its parents: ', $extraContext);
             for ($i = 0, --$len; $i < $len; ++$i) {
                 $message .= sprintf('%s "%s", ', class_exists($aliases[$i], false) ? 'class' : 'interface', $aliases[$i]);

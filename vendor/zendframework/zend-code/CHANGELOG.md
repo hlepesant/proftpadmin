@@ -2,9 +2,13 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 3.3.1 - TBD
+## 3.3.1 - 2018-08-13
 
 ### Added
+
+- Nothing.
+
+### Changed
 
 - Nothing.
 
@@ -18,7 +22,25 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#158](https://github.com/zendframework/zend-code/pull/158) updates several `switch` cases to use `break` instead of `continue`
+  in order to prevent issues under the upcoming PHP 7.3 release.
+
+- [#147](https://github.com/zendframework/zend-code/pull/147) fixes the regular expression used for `@var` annotations to
+  allow omission of the variable name.
+
+- [#146](https://github.com/zendframework/zend-code/pull/146) updates all `@return` annotations to reflect the correct types returned by each method.
+
+- [#144](https://github.com/zendframework/zend-code/pull/144) fixes the class generator such that it now resolves
+  `setExtendedClass()` arguments to aliases provided to the generator.
+
+- [#140](https://github.com/zendframework/zend-code/pull/140) fixes `MethodScanner::setVisibility()` such that it no longer
+  casts the provided visibility token to lower case; this fix is necessary, as
+  the method is supposed to expect only the appropriate
+  `T_(PUBLIC|PROTECTED|PRIVATE)` token values, which are integers.
+
+- [#140](https://github.com/zendframework/zend-code/pull/140) updates the `MethodScanner::setVisibility()` method to raise
+  a package-specific `InvalidArgumentException` instead of the non-existent
+  package `Exception` class when an invalid visibility is provided.
 
 ## 3.3.0 - 2017-10-20
 
@@ -103,11 +125,11 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#87](https://github.com/zendframework/zend-code/pull/95) support for
+- [#87](https://github.com/zendframework/zend-code/pull/87) support for
   PHP 7.1's `void` return type declaration.
-- [#87](https://github.com/zendframework/zend-code/pull/95) support for
+- [#87](https://github.com/zendframework/zend-code/pull/87) support for
   PHP 7.1's nullable type declarations.
-- [#87](https://github.com/zendframework/zend-code/pull/95) support for
+- [#87](https://github.com/zendframework/zend-code/pull/87) support for
   PHP 7.1's `iterable` type declaration.
 - [#62](https://github.com/zendframework/zend-code/pull/62) added
   `Zend\Code\Generator\MethodGenerator#getReturnType()` accessor.
@@ -256,6 +278,9 @@ All notable changes to this project will be documented in this file, in reverse 
 ## 3.0.0 - 2016-01-13
 
 ### Changed
+
+- [#140](https://github.com/zendframework/zend-code/pull/140) updates the `MethodScanner::setVisibility()` method to raise a package-specific `InvalidArgumentException` instead of
+  the non-existent package `Exception` class when an invalid visibility is provided.
 
 This section refers to breaking changes: please refer to
 [doc/book/migration.md](doc/book/migration.md) for migration instructions.

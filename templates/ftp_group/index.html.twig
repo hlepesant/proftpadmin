@@ -3,15 +3,15 @@
 {% block title %}FtpGroup index{% endblock %}
 
 {% block body %}
-    <h1>List of groups</h1>
+    <h1>{% trans %}ftpgroup.list{% endtrans %}</h1>
 
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
-                <th scope="col" class="col-sm-2">Name</th>
-                <th scope="col" class="col-sm-1"># Members</th>
-                <th scope="col" class="col-sm-1">status</th>
-                <th scope="col" class="col-sm-1 text-right" colspan="3"><a href="{{ path('ftp_group_new') }}" class="text-white"><img src="{{ asset('/media/famfam/add.png') }}" alt="Create" /></a></th>
+                <th scope="col" class="col-sm-2">{% trans %}ftpgroup.name{% endtrans %}</th>
+                <th scope="col" class="col-sm-1">{% trans %}ftpgroup.number_of_members{% endtrans %}</th>
+                <th scope="col" class="col-sm-1">{% trans %}ftpgroup.status{% endtrans %}</th>
+                <th scope="col" class="col-sm-1 text-right" colspan="3"><a href="{{ path('ftp_group_new') }}" class="text-white"><img src="{{ asset('/media/famfam/add.png') }}" alt="Create" data-toggle="tooltip" data-original-title="{% trans %}ftpgroup.create{% endtrans %}" /></a></th>
             </tr>
         </thead>
         <tbody>
@@ -21,18 +21,18 @@
                 <td>{{ ftp_group.groupname }}</td>
                 <td>{{ ftp_group.members|length }}</td>
                 <td>{% if ftp_group.active %} 
-					<img src="{{ asset('/media/famfam/accept.png') }}" alt="enabled" />
+					<img src="{{ asset('/media/famfam/accept.png') }}" alt="enabled" data-toggle="tooltip" data-original-title="{% trans %}ftpgroup.status_enable{% endtrans %}" />
 				{% else %}
-					<img src="{{ asset('/media/famfam/delete.png') }}" alt="disabled" />
+					<img src="{{ asset('/media/famfam/delete.png') }}" alt="disabled" data-toggle="tooltip" data-original-title="{% trans %}ftpgroup.status_disable{% endtrans %}" />
 				{% endif %}
 				</td>
-                <td><a href="{{ path('ftp_user_index', { 'id_group': ftp_group.id }) }}"><img src="{{ asset('/media/famfam/group.png') }}" alt="Users" /></a></td>
-                <td><a href="{{ path('ftp_group_edit', { 'id': ftp_group.id }) }}"><img src="{{ asset('/media/famfam/pencil.png') }}" alt="Edit" /></a></td>
+                <td><a href="{{ path('ftp_user_index', { 'id_group': ftp_group.id }) }}"><img src="{{ asset('/media/famfam/group.png') }}" alt="Users" data-toggle="tooltip" data-original-title="{% trans %}ftpgroup.users{% endtrans %}"  /></a></td>
+                <td><a href="{{ path('ftp_group_edit', { 'id': ftp_group.id }) }}"><img src="{{ asset('/media/famfam/pencil.png') }}" alt="Edit" data-toggle="tooltip" data-original-title="{% trans %}ftpgroup.edit{% endtrans %}"  /></a></td>
                 <td>
                 {% if is_granted('ROLE_ADMIN') and ftp_group.members|length == 0 %}
 					{{ include('ftp_group/_delete_form.html.twig') }}
                 {% else %} 
-                <img src="{{ asset('/media/famfam/lock.png') }}" data-toggle="tooltip" title="" data-original-title="{% trans %}Remove all members{% endtrans %}" />
+                <img src="{{ asset('/media/famfam/lock.png') }}" alt="Lock" data-toggle="tooltip" data-original-title="{% trans %}ftpgroup.all_members{% endtrans %}" />
                 {% endif %}
                 </td>
             </tr>

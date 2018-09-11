@@ -40,18 +40,13 @@ class FtpUserRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findByGroupIdPaginate($id_group)
+    public function findByGroupIdPaginator($id_group)
     {
-        $queryBuilder = $this->createQueryBuilder('u')
+        return $this->createQueryBuilder('u')
             ->andWhere('u.ftpgroup = :val')
             ->setParameter('val', $id_group)
             ->orderBy('u.username', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-
-		$adapter = new DoctrineORMAdapter($queryBuilder);
-		return $adapter;
+            ->getQuery() ;
     }
 
     /*

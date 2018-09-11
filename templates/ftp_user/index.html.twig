@@ -49,10 +49,8 @@
         </tbody>
     </table>
 
-	<div class="pagerfanta">
-	<!--
-	    {* pagerfanta(my_pager, 'twitter_bootstrap4') *}
-		-->
+	<div class="navigation">
+	    {{ knp_pagination_render(ftp_users) }}
 	</div>
 
 {% endblock %}

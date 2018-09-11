@@ -15,8 +15,8 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Compiler\AutowireRequiredMethodsPass;
 use Symfony\Component\DependencyInjection\Compiler\AutowirePass;
+use Symfony\Component\DependencyInjection\Compiler\AutowireRequiredMethodsPass;
 use Symfony\Component\DependencyInjection\Compiler\DecoratorServicePass;
 use Symfony\Component\DependencyInjection\Compiler\ResolveClassPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -832,6 +832,29 @@ class AutowirePassTest extends TestCase
 
         $definition = $container->getDefinition(Decorator::class);
         $this->assertSame(Decorator::class.'.inner', (string) $definition->getArgument(1));
+    }
+
+    public function testAutowireDecoratorChain()
+    {
+        $container = new ContainerBuilder();
+        $container->register(LoggerInterface::class, NullLogger::class);
+        $container->register(Decorated::class, Decorated::class);
+        $container
+            ->register(Decorator::class, Decorator::class)
+            ->setDecoratedService(Decorated::class)
+            ->setAutowired(true)
+        ;
+        $container
+            ->register(DecoratedDecorator::class, DecoratedDecorator::class)
+            ->setDecoratedService(Decorated::class)
+            ->setAutowired(true)
+        ;
+
+        (new DecoratorServicePass())->process($container);
+        (new AutowirePass())->process($container);
+
+        $definition = $container->getDefinition(DecoratedDecorator::class);
+        $this->assertSame(DecoratedDecorator::class.'.inner', (string) $definition->getArgument(0));
     }
 
     public function testAutowireDecoratorRenamedId()

@@ -11,13 +11,13 @@
 
 namespace Symfony\Component\Security\Core\Authorization\Voter;
 
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolverInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\ExpressionLanguage;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
-use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
-use Symfony\Component\ExpressionLanguage\Expression;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * ExpressionVoter votes based on the evaluation of an expression.
@@ -42,7 +42,7 @@ class ExpressionVoter implements VoterInterface
      */
     public function addExpressionLanguageProvider(ExpressionFunctionProviderInterface $provider)
     {
-        @trigger_error(sprintf('The %s() method is deprecated since Symfony 4.1, register the provider directly on the injected ExpressionLanguage instance instead.', __METHOD__), E_USER_DEPRECATED);
+        @trigger_error(sprintf('The "%s()" method is deprecated since Symfony 4.1, register the provider directly on the injected ExpressionLanguage instance instead.', __METHOD__), E_USER_DEPRECATED);
 
         $this->expressionLanguage->registerProvider($provider);
     }

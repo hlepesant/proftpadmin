@@ -4,13 +4,13 @@
 <div class="panel-footer row">
     <div class="col-xs-5 text-left">
         <div class="previous">
-			<button class="btn">{{ button_label|default('Save') }}</button>
+			<button class="btn">{{ button_label|default('Save'|trans) }}</button>
         </div>
     </div>
     <div class="col-xs-2 text-center">&nbsp;&nbsp;</div>
     <div class="col-xs-5 text-right">   
         <div class="next">
-            <a href="{{ path('ftp_group_index') }}"><button type="button" class="btn btn-secondary">Cancel</button></a>
+            <a href="{{ path('ftp_group_index') }}"><button type="button" class="btn btn-secondary">{% trans %}Cancel{% endtrans %}</button></a>
         </div>
     </div>
 </div>

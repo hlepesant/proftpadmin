@@ -1,0 +1,22 @@
+label_previous: Previous
+label_next: Next
+ftpgroup:
+    list: List of companies
+    create: Create
+    edit: Edit
+    users: The accounts
+    all_members: Remove all members
+    name: Name
+    number_of_members: Members
+    status: Status
+    status_enable: Enabled
+    status_disable: Disabled
+    create_new: Create a company
+Groupname: Name
+Activate: Enable
+Gid: id
+Cancel: Cancel
+Save: Save
+
+ftpuser:
+    list: List of accounts

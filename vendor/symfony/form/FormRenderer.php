@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Form;
 
-use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\Form\Exception\BadMethodCallException;
+use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Twig\Environment;
 
@@ -174,7 +174,7 @@ class FormRenderer implements FormRendererInterface
             foreach ($view->vars['block_prefixes'] as $blockNamePrefix) {
                 $blockNameHierarchy[] = $blockNamePrefix.'_'.$blockNameSuffix;
             }
-            $hierarchyLevel = count($blockNameHierarchy) - 1;
+            $hierarchyLevel = \count($blockNameHierarchy) - 1;
 
             $hierarchyInit = true;
         } else {
@@ -218,7 +218,7 @@ class FormRenderer implements FormRendererInterface
 
         // Escape if no resource exists for this block
         if (!$resource) {
-            if (count($blockNameHierarchy) !== count(array_unique($blockNameHierarchy))) {
+            if (\count($blockNameHierarchy) !== \count(array_unique($blockNameHierarchy))) {
                 throw new LogicException(sprintf('Unable to render the form because the block names array contains duplicates: "%s".', implode('", "', array_reverse($blockNameHierarchy))));
             }
 

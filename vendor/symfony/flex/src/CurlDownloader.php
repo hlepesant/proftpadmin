@@ -64,7 +64,7 @@ class CurlDownloader
         $params = stream_context_get_params($context);
 
         $ch = curl_init();
-        $hd = fopen('php://memory', 'w+b');
+        $hd = fopen('php://temp/maxmemory:32768', 'w+b');
         if ($file && !$fd = @fopen($file.'~', 'w+b')) {
             $file = null;
         }
@@ -77,6 +77,9 @@ class CurlDownloader
             curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
         } else {
             $headers[] = 'Connection: keep-alive';
+            if (0 === strpos($url, 'https://') && \defined('CURL_VERSION_HTTP2') && \defined('CURL_HTTP_VERSION_2_0') && (CURL_VERSION_HTTP2 & curl_version()['features'])) {
+                curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
+            }
         }
 
         curl_setopt($ch, CURLOPT_URL, $url);

@@ -17,8 +17,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -90,7 +90,7 @@ EOF
     {
         $io = new SymfonyStyle($input, $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output);
 
-        if (!extension_loaded('pcntl')) {
+        if (!\extension_loaded('pcntl')) {
             $io->error(array(
                 'This command needs the pcntl extension to run.',
                 'You can either install it or use the "server:run" command instead.',

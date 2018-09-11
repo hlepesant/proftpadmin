@@ -12,11 +12,11 @@
 namespace Symfony\Component\Security\Core\User;
 
 use Symfony\Component\Ldap\Entry;
+use Symfony\Component\Ldap\Exception\ConnectionException;
+use Symfony\Component\Ldap\LdapInterface;
 use Symfony\Component\Security\Core\Exception\InvalidArgumentException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Symfony\Component\Ldap\Exception\ConnectionException;
-use Symfony\Component\Ldap\LdapInterface;
 
 /**
  * LdapUserProvider is a simple user provider on top of ldap.
@@ -35,8 +35,12 @@ class LdapUserProvider implements UserProviderInterface
     private $defaultSearch;
     private $passwordAttribute;
 
-    public function __construct(LdapInterface $ldap, string $baseDn, string $searchDn = null, string $searchPassword = null, array $defaultRoles = array(), string $uidKey = 'sAMAccountName', string $filter = '({uid_key}={username})', string $passwordAttribute = null)
+    public function __construct(LdapInterface $ldap, string $baseDn, string $searchDn = null, string $searchPassword = null, array $defaultRoles = array(), ?string $uidKey = 'sAMAccountName', string $filter = '({uid_key}={username})', string $passwordAttribute = null)
     {
+        if (null === $uidKey) {
+            $uidKey = 'sAMAccountName';
+        }
+
         $this->ldap = $ldap;
         $this->baseDn = $baseDn;
         $this->searchDn = $searchDn;
@@ -62,7 +66,7 @@ class LdapUserProvider implements UserProviderInterface
         }
 
         $entries = $search->execute();
-        $count = count($entries);
+        $count = \count($entries);
 
         if (!$count) {
             throw new UsernameNotFoundException(sprintf('User "%s" not found.', $username));
@@ -90,7 +94,7 @@ class LdapUserProvider implements UserProviderInterface
     public function refreshUser(UserInterface $user)
     {
         if (!$user instanceof User) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
         }
 
         return new User($user->getUsername(), null, $user->getRoles());
@@ -137,7 +141,7 @@ class LdapUserProvider implements UserProviderInterface
 
         $values = $entry->getAttribute($attribute);
 
-        if (1 !== count($values)) {
+        if (1 !== \count($values)) {
             throw new InvalidArgumentException(sprintf('Attribute "%s" has multiple values.', $attribute));
         }
 
