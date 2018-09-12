@@ -26,6 +26,13 @@ class FtpGroupRepository extends ServiceEntityRepository
 		$this->params = $params;
     }
 
+    public function findAllPaginator()
+    {
+        return $this->createQueryBuilder('g')
+            ->getQuery()
+        ;
+    }
+
 //    /**
 //     * @return FtpGroup[] Returns an array of FtpGroup objects
 //     */

@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Knp\Component\Pager\PaginatorInterface;
+
 /**
  * @Route("/ftp/group")
  */
@@ -18,9 +20,24 @@ class FtpGroupController extends Controller
     /**
      * @Route("/", name="ftp_group_index", methods="GET")
      */
-    public function index(FtpGroupRepository $ftpGroupRepository): Response
+    public function index(FtpGroupRepository $ftpGroupRepository, Request $request): Response
     {
-        return $this->render('ftp_group/index.html.twig', ['ftp_groups' => $ftpGroupRepository->findAll()]);
+        # return $this->render('ftp_group/index.html.twig', ['ftp_groups' => $ftpGroupRepository->findAll()]);
+
+        $em = $this->getDoctrine()->getManager();
+		$ftpGroupRepository = $em->getRepository(FtpGroup::class);
+		$allFtpGroupQuery = $ftpGroupRepository->findAllPaginator();
+		$paginator = $this->get('knp_paginator');
+		$ftp_groups = $paginator->paginate(
+			$allFtpGroupQuery,
+			$request->query->getInt('page', 1)
+		); 
+
+		return $this->render('ftp_group/index.html.twig', [
+			'ftp_groups' => $ftp_groups,
+		]);
+
+
     }
 
     /**

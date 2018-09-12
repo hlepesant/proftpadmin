@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
-#use Pagerfanta\Adapter\DoctrineORMAdapter;
-
 use Knp\Component\Pager\PaginatorInterface;
 
 /**
