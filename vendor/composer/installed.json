@@ -4300,7 +4300,8 @@
             }
         ],
         "description": "Enforces Long Term Supported versions of Symfony components",
-        "homepage": "https://symfony.com"
+        "homepage": "https://symfony.com",
+        "abandoned": "symfony/flex"
     },
     {
         "name": "symfony/maker-bundle",

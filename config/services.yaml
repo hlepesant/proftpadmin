@@ -8,6 +8,8 @@ parameters:
     ftp_user_id: 'auto'
     ftp_base_path: '/opt/FtpSites'
     #ftp_base_path: '/space/FtpSites'
+    queue_dir: '%kernel.project_dir%/var/queue'
+
 
 services:
     # default configuration for services in *this* file

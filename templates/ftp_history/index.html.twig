@@ -9,11 +9,10 @@
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
-                <th scope="col" class="col-sm-2">Date</th>
-                <th scope="col" class="col-sm-1">Client ip</th>
-                <th scope="col" class="col-sm-2">Operation</th>
-                <th scope="col" class="col-sm-5">File</th>
-                <th scope="col" class="col-sm-1">Status<a href="https://en.wikipedia.org/wiki/List_of_FTP_server_return_codes" target="_blank">*</a></th>
+                <th scope="col">Date</th>
+                <th scope="col">Client ip</th>
+                <th scope="col">Operation</th>
+                <th scope="col">Status<a href="https://en.wikipedia.org/wiki/List_of_FTP_server_return_codes" target="_blank">*</a></th>
             </tr>
         </thead>
         <tbody>
@@ -22,7 +21,6 @@
                 <td>{{ ftp_history.date ? ftp_history.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ ftp_history.clientIp }}</td>
                 <td>{{ ftp_history.operation}}</td>
-                <td>{{ ftp_history.file }}</td>
                 <td>{{ ftp_history.status }}</td>
             </tr>
         {% else %}
@@ -32,5 +30,9 @@
         {% endfor %}
         </tbody>
     </table>
+
+	<div class="navigation">
+	    {{ knp_pagination_render(ftp_histories) }}
+	</div>
 
 {% endblock %}

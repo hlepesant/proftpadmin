@@ -54,6 +54,22 @@ class FtpHistoryRepository extends ServiceEntityRepository
         ;
 	}
 
+	public function findByUserAndGroupIdPaginator($id_user, $id_group)
+	{
+        return $this->createQueryBuilder('h')
+			->innerJoin('h.ftpuser', 'u')
+			->addSelect('u')
+			->innerJoin('u.ftpgroup', 'g')
+			->addSelect('g')
+            ->andWhere('h.ftpuser = :idu')
+            ->andWhere('g.id = :idg')
+            ->setParameter('idu', $id_user)
+            ->setParameter('idg', $id_group)
+            ->orderBy('h.date', 'DESC')
+            ->getQuery()
+        ;
+	}
+
 
 
     /*

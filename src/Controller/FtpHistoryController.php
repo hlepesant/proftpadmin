@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+use Knp\Component\Pager\PaginatorInterface;
+
 /**
  * @Route("/ftp/history")
  */
@@ -27,7 +29,7 @@ class FtpHistoryController extends Controller
      * @ParamConverter("ftpGroup", options={"id" = "id_group"})
      * @ParamConverter("ftpUser", options={"id" = "id_user"})
      */
-    public function index(FtpHistoryRepository $ftpHistoryRepository, Ftpgroup $ftpGroup, Ftpuser $ftpUser): Response
+    public function index(FtpHistoryRepository $ftpHistoryRepository, Ftpgroup $ftpGroup, Ftpuser $ftpUser, Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -46,14 +48,28 @@ class FtpHistoryController extends Controller
                 'No ftp user found for id '.$ftpUser->getId()
             );
         }
-
-        #return $this->render('ftp_history/index.html.twig', ['ftp_histories' => $ftpHistoryRepository->findAll()]);
+/*
 		return $this->render('ftp_history/index.html.twig', [
 			'ftp_group' => $ftpGroup,
 			'ftp_user' => $ftpUser,
 			#'ftp_histories' => $ftpHistoryRepository->findAll(),
 			#'ftp_histories' => $ftpHistoryRepository->findByUserId($ftpUser->getId())
 			'ftp_histories' => $ftpHistoryRepository->findByUserAndGroupId($ftpUser->getId(), $ftpGroup->getId())
+		]);
+ */
+
+		$ftpHistoryRepository = $em->getRepository(FtpHistory::class);
+		$allFtpHistoryQuery = $ftpHistoryRepository->findByUserAndGroupIdPaginator($ftpUser->getId(), $ftpGroup->getId());
+		$paginator = $this->get('knp_paginator');
+		$ftp_histories = $paginator->paginate(
+			$allFtpHistoryQuery,
+			$request->query->getInt('page', 1)
+		); 
+
+		return $this->render('ftp_history/index.html.twig', [
+			'ftp_group'		=> $ftpGroup,
+			'ftp_user'		=> $ftpUser,
+			'ftp_histories' => $ftp_histories
 		]);
     }
 

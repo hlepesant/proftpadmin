@@ -14,6 +14,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('Default/index.html.twig');
+		return $this->redirectToRoute('ftp_group_index');
+        #return $this->render('Default/index.html.twig');
     }
 }

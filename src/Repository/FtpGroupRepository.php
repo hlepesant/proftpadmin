@@ -29,6 +29,7 @@ class FtpGroupRepository extends ServiceEntityRepository
     public function findAllPaginator()
     {
         return $this->createQueryBuilder('g')
+            ->orderBy('g.groupname', 'ASC')
             ->getQuery()
         ;
     }

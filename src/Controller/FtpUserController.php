@@ -15,6 +15,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use Knp\Component\Pager\PaginatorInterface;
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+
 /**
  * @Route("/ftp/user")
  */
@@ -181,6 +184,22 @@ class FtpUserController extends Controller
      */
     public function delete(Request $request, FtpUser $ftpUser, Ftpgroup $ftpGroup): Response
     {
+		$queue_dir = $this->container->getParameter('queue_dir');
+		$queue_file = sprintf( "%s/ftp_user_to_remove.txt", $queue_dir);
+
+		try {
+			$fileSystem = new Filesystem();
+
+			if ( ! $fileSystem->exists($queue_dir) ) {
+				$fileSystem->mkdir($queue_dir, 0755);
+				#$fileSystem->touch($queue_file);
+			}
+		} catch (IOExceptionInterface $exception) {
+			echo "An error occurred while creating the queue directory";
+		}
+
+		$fileSystem->appendToFile($queue_file, sprintf("%s\n", $ftpUser->getHome()));
+
         if ($this->isCsrfTokenValid('delete'.$ftpUser->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($ftpUser);

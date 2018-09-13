@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a92dd8f76ec31e2eadea23e4c78ba51c",
+    "content-hash": "f2504c67495b5f18495bd8da96c4e3d3",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -3655,6 +3655,7 @@
             ],
             "description": "Enforces Long Term Supported versions of Symfony components",
             "homepage": "https://symfony.com",
+            "abandoned": "symfony/flex",
             "time": "2018-04-03T05:04:16+00:00"
         },
         {
