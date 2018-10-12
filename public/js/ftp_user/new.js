@@ -5,7 +5,7 @@ jQuery(document).ready(function () {
     //$('#proftpbundle_ftpuser_group').attr("disabled", true); 
     //$('#proftpbundle_ftpuser_group').attr("style", "pointer-events: none;");
     //$('#proftpbundle_ftpuser_group option:not(:selected)').prop('disabled', true);
-    //var home = $('#proftpbundle_ftpuser_home').val();
+    var home = $('#ftp_user_home').val();
 
     $('#ftp_user_firstname, #ftp_user_lastname').on('change blur click', function(){
 
@@ -19,8 +19,17 @@ jQuery(document).ready(function () {
             var username = initiale + lastname; 
             username = removeDiacritics(username);
             $('#ftp_user_username').val(username);
-            //$('#ftp_user_home').val( home + '/' + username);
+
+			//var ftp_home = home + '/' + username.toLowerCase().replace(/\s/g, '');
+			var ftp_home = home + username.toLowerCase().replace(/\s/g, '');
+            $('#ftp_user_home').val( ftp_home );
         }
+    });
+
+    $('#ftp_user_username').on('change blur click', function(){
+        var userame = $('#ftp_user_userame').val().replace(/\s/g, '');
+		var ftp_home = home + username.toLowerCase().replace(/\s/g, '');
+        $('#ftp_user_home').val( ftp_home );
     });
 
     var pwd_options = {};

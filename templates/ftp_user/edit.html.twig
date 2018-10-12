@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+<script src="{{ asset('js/ftp_user/diacritics.js') }}"></script>
+<script src="{{ asset('js/ftp_user/pwstrength-bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/ftp_user/edit.js') }}"></script>
+{% endblock %}
+
 {% block title %}Edit FtpUser{% endblock %}
 
 {% block body %}

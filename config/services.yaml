@@ -4,8 +4,8 @@ parameters:
     locale: 'fr'
     #ftp_group_id: 'auto'
     #ftp_user_id: 'auto'
-    ftp_group_id: 1001
-    ftp_user_id: 'auto'
+    ftp_group_id: 33
+    ftp_user_id: '33'
     ftp_base_path: '/opt/FtpSites'
     #ftp_base_path: '/space/FtpSites'
     queue_dir: '%kernel.project_dir%/var/queue'

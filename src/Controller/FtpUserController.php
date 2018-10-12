@@ -38,7 +38,6 @@ class FtpUserController extends Controller
                 'No ftp group found for id '.$ftpGroup->getId()
             );
         }
-
 /*
 		return $this->render('ftp_user/index.html.twig', [
 			'ftp_group' => $ftpGroup,
@@ -46,7 +45,6 @@ class FtpUserController extends Controller
 		    #'my_pager' => $pagerfanta,
 		]);
 */
-
 		$ftpUserRepository = $em->getRepository(FtpUser::class);
 		$allFtpUserQuery = $ftpUserRepository->findByGroupIdPaginator($ftpGroup->getId());
 		$paginator = $this->get('knp_paginator');
@@ -78,18 +76,22 @@ class FtpUserController extends Controller
         $ftpUser->setLoginCount(0);
         $ftpUser->setActive(true);
 
+		$ftpUser->setHome(sprintf('%s/%s/',
+			$this->container->getParameter('ftp_base_path'),
+			$ftpGroup->getGroupname()
+		));
+
         $form = $this->createForm(FtpUserType::class, $ftpUser);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+/*
 			$ftpUser->setHome(sprintf('%s/%s/%s',
 				$this->container->getParameter('ftp_base_path'),
 				$ftpGroup->getGroupname(),
 				$ftpUser->getUsername())
 			);
-
-
+ */
             $em = $this->getDoctrine()->getManager();
             $em->persist($ftpUser);
             $em->flush();
@@ -128,6 +130,7 @@ class FtpUserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $this->getDoctrine()->getManager()->flush();
 
 			return $this->redirectToRoute('ftp_user_index', [
