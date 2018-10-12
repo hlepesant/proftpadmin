@@ -31,15 +31,16 @@ class FtpUserType extends AbstractType
 				'first_options'  => array('label' => 'Password'),
 				'second_options' => array('label' => 'Repeat Password'),
 			))
+            ->add('home', TextType::class, array(
+                #'disabled' => false,
+				'required' => true,
+            ))
 			->add('active', CheckboxType::class, array(
 				'label'    => 'Activate',
 				'required' => false,
 			))
 			/*
             ->add('uid', TextType::class, array(
-                'disabled' => 'true'
-            ))
-            ->add('home', TextType::class, array(
                 'disabled' => 'true'
             ))
             ->add('shell', TextType::class, array(
